@@ -320,7 +320,7 @@
       </div>
       <div class="note" id="multiNote" hidden>
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16.5v.01"/></svg>
-        <span>Multicolor prints get a <strong>custom quote</strong>, since the price depends on how many color swaps the model needs. Fill out the rest and send it, I'll price it and get back to you fast.</span>
+        <span>Multicolor prints get a <strong>custom quote</strong>, since the price depends on how many color swaps the model needs. Send the request, I'll price it fast, and once it's paid you're in the queue.</span>
       </div>
     </div>
 
@@ -369,7 +369,7 @@
 
     <div class="submitblock">
       <button class="bigcta" id="submitBtnInline" type="submit">Send my order &rarr;</button>
-      <p class="submitnote">Next you'll see your quote and the payment options. <strong>Nothing is charged automatically.</strong> You pay only after you see the price, and I confirm before anything prints.</p>
+      <p class="submitnote">Next you'll see your price and the Cash App / Venmo buttons. <strong>Nothing is charged automatically</strong>, and <strong>nothing prints until it's paid.</strong></p>
     </div>
   </form>
 
@@ -401,7 +401,7 @@
     </details>
     <details>
       <summary>Do I get charged when I hit send? <span class="plus">+</span></summary>
-      <div class="body"><strong>No. Nothing is charged automatically.</strong> Sending the order puts you in my queue and shows you the price. Then you choose to pay through Cash App or Venmo (the amount's pre-filled), or Apple Pay / cash at pickup. I confirm the order before anything prints.</div>
+      <div class="body"><strong>No. Nothing is charged automatically.</strong> Sending shows you the price and Cash App / Venmo buttons with the amount pre-filled. You pay there, and that's what starts your order. <strong>Everything is paid upfront, no exceptions</strong>, and it's Cash App or Venmo only (no cash at pickup). Multicolor and exotic-material requests get a price from me first, then you pay to start.</div>
     </details>
     <details>
       <summary>What if the model is bigger than the size I picked? <span class="plus">+</span></summary>
@@ -550,10 +550,9 @@
     if(isCustom){ priceText = "Custom quote (" + customReason.join(" + ") + ")"; }
     else { var t = computeTotal(); priceText = state.size === "L" ? fmt(t) + "+ (est.)" : fmt(t); }
 
-    var amountLocked = !isCustom && state.size !== "L";
-    var amt = amountLocked ? Math.round(computeTotal()) : null;
-    var payText = amt ? ("$" + amt + " via Cash App $" + CASHTAG + " or Venmo @" + VENMO)
-                      : ("after total is confirmed, Cash App $" + CASHTAG + " or Venmo @" + VENMO);
+    var amt = !isCustom ? Math.round(computeTotal()) : null;
+    var payText = amt ? ("$" + amt + (state.size === "L" ? " (starting price)" : "") + " upfront via Cash App $" + CASHTAG + " or Venmo @" + VENMO)
+                      : ("quote request, pay after price is sent (Cash App $" + CASHTAG + " or Venmo @" + VENMO + ")");
     var deliveryText = state.del==="ship" ? "Ship (+$8)" : "Local pickup";
 
     var summary = [
@@ -620,19 +619,28 @@
     row("Name", esc(o.name));
     row("Contact", esc(o.contact), true);
 
-    var payHtml = '<div class="pay">' +
-      (o.amt
-        ? '<h3>Pay $' + o.amt + ' to lock it in</h3><p>Amount\'s already filled in. Tap one, hit send, you\'re in the queue.</p>'
-        : '<h3>Payment</h3><p>I\'ll confirm your total first, then you pay with either of these:</p>') +
-      '<div class="paybtns">' +
-      '<a class="paybtn cash" href="' + cashUrl + '" target="_blank" rel="noopener">Cash App</a>' +
-      '<a class="paybtn venmo" href="' + venmoUrl + '" target="_blank" rel="noopener">Venmo</a>' +
-      '</div><p class="alt">Or Apple Pay / cash at pickup.</p></div>';
+    var payHtml;
+    if(o.amt){
+      payHtml = '<div class="pay">' +
+        '<h3>Pay $' + o.amt + ' to start your order</h3>' +
+        '<p>' + (o.sizeName==="Large"
+              ? 'That\'s the starting price for a Large. Amount\'s pre-filled. If the model runs bigger than that tier, I\'ll tell you the difference before printing.'
+              : 'Amount\'s pre-filled. Tap one, hit send, and you\'re in the print queue.') + '</p>' +
+        '<div class="paybtns">' +
+        '<a class="paybtn cash" href="' + cashUrl + '" target="_blank" rel="noopener">Cash App</a>' +
+        '<a class="paybtn venmo" href="' + venmoUrl + '" target="_blank" rel="noopener">Venmo</a>' +
+        '</div><p class="alt">Orders don\'t start until payment lands. Cash App or Venmo only.</p></div>';
+    } else {
+      payHtml = '<div class="pay">' +
+        '<h3>Quote request received</h3>' +
+        '<p>This isn\'t an order yet. I\'ll look at the model and send you the exact price with a pay link. Once that\'s paid, you\'re in the queue.</p>' +
+        '<p class="alt">Payment is Cash App or Venmo, always before printing.</p></div>';
+    }
 
-    var headTitle = sent ? "Order sent" : "Order ready";
-    var headSub = sent ? "You're in the queue. I'll confirm and reach out." : "Review it below";
-    var headSmall = o.isCustom ? "I\'ll send your exact price shortly"
-                   : (o.sizeName==="Large" ? "Final price confirmed after I check the model" : "Locked in for a single-color PLA+ / PETG print");
+    var headTitle = sent ? (o.isCustom ? "Quote request sent" : "Order sent") : "Order ready";
+    var headSub = sent ? (o.isCustom ? "I'll get you a price shortly." : "Pay below and you're in the queue.") : "Review it below";
+    var headSmall = o.isCustom ? "Exact price coming from me, then you pay to start"
+                   : (o.sizeName==="Large" ? "Starting price. I confirm before printing." : "Single-color PLA+ / PETG. Pay to lock it in.");
     var warn = sent ? "" :
       '<div class="warnbox"><strong>Heads up:</strong> the order didn\'t send automatically (bad signal, maybe). Tap <strong>Copy order details</strong> and message it to me on Facebook so it doesn\'t get lost.</div>';
 
