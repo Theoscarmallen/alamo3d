@@ -1,0 +1,651 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Alamo 3D: custom 3D printing in San Antonio. Paste a model link, get your price instantly. PLA+ and PETG, local pickup or shipping.">
+<title>Alamo 3D · Get a print quote</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23F1560B'/%3E%3Cpath d='M18 14h28l-3 14H21z' fill='none' stroke='%23fff' stroke-width='5' stroke-linejoin='round'/%3E%3Cpath d='M32 28v14' stroke='%23fff' stroke-width='5' stroke-linecap='round'/%3E%3Crect x='24' y='42' width='16' height='12' rx='2' fill='none' stroke='%23fff' stroke-width='5'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --bg:#EAEEF2; --surface:#FFFFFF; --surface-2:#F4F6F9;
+    --ink:#14181D; --muted:#5A6472; --line:#D6DCE3; --line-2:#E5EAF0;
+    --accent:#F1560B; --accent-ink:#FFFFFF; --accent-soft:#FDE7D7;
+    --good:#1F9D57; --warn:#B8790A; --warn-soft:#F8ECC9; --crit:#D23B3B;
+    --shadow:0 1px 2px rgba(20,24,29,.06), 0 8px 24px rgba(20,24,29,.06);
+    --font-display:"Archivo","Arial Black",system-ui,sans-serif;
+    --font-body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+    --font-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",monospace;
+    padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#0E1218; --surface:#191F27; --surface-2:#141a21;
+      --ink:#EDF1F6; --muted:#93A0B0; --line:#2A333F; --line-2:#232b34;
+      --accent:#FF6A1F; --accent-ink:#160b03; --accent-soft:#2c1a0d;
+      --good:#3FC178; --warn:#E4B24a; --warn-soft:#2a2410; --crit:#F0685F;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.35);
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:var(--font-body); font-size:15px; line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  [hidden]{display:none!important}
+  img{max-width:100%}
+  .wrap{max-width:560px; margin:0 auto; padding-inline:16px; padding-block:0 132px;}
+
+  header.top{padding-block:26px 14px;}
+  .brand{display:flex; align-items:center; gap:11px;}
+  .mark{
+    width:40px; height:40px; border-radius:11px; flex:none;
+    background:var(--accent); color:var(--accent-ink);
+    display:grid; place-items:center; box-shadow:var(--shadow);
+  }
+  .mark svg{width:22px; height:22px; display:block;}
+  .brand h1{
+    font-family:var(--font-display); font-weight:800; font-size:19px;
+    letter-spacing:-.01em; margin:0; line-height:1.1;
+  }
+  .brand .sub{font-size:12px; color:var(--muted); margin-top:1px; font-weight:500;}
+  .lede{margin:16px 0 0; font-size:15.5px; color:var(--ink);}
+  .lede strong{font-weight:600;}
+
+  .card{
+    background:var(--surface); border:1px solid var(--line);
+    border-radius:16px; padding:18px; margin-top:14px; box-shadow:var(--shadow);
+  }
+  .step{display:flex; align-items:baseline; gap:9px; margin:0 0 13px;}
+  .step .n{
+    font-family:var(--font-mono); font-weight:600; font-size:11px;
+    color:var(--accent); background:var(--accent-soft);
+    width:22px; height:22px; border-radius:6px; display:grid; place-items:center;
+    flex:none; align-self:center;
+  }
+  .step h2{font-family:var(--font-display); font-weight:700; font-size:15.5px; margin:0; letter-spacing:-.005em;}
+  .step .req{font-size:11px; color:var(--crit); font-weight:600; margin-left:auto; align-self:center;}
+  .step .opt{font-size:11px; color:var(--muted); font-weight:500; margin-left:auto; align-self:center;}
+
+  label.fld{display:block;}
+  .hint{font-size:12.5px; color:var(--muted); margin:0 0 9px;}
+  .hint a{color:var(--accent); font-weight:600; text-decoration:none;}
+  .hint a:hover{text-decoration:underline;}
+
+  input[type=url],input[type=text],input[type=email],input[type=date],select,textarea{
+    width:100%; font-family:var(--font-body); font-size:15px; color:var(--ink);
+    background:var(--surface-2); border:1.5px solid var(--line);
+    border-radius:10px; padding:11px 12px; -webkit-appearance:none; appearance:none;
+  }
+  textarea{resize:vertical; min-height:44px;}
+  input:focus,select:focus,textarea:focus,button:focus-visible,.tile:focus-visible,.switch:focus-visible{outline:none;}
+  input:focus,select:focus,textarea:focus{border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft);}
+  button:focus-visible,.tile:focus-visible,.switch:focus-visible,.paybtn:focus-visible{box-shadow:0 0 0 3px var(--accent-soft); border-color:var(--accent);}
+  select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235A6472' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 13px center; padding-right:34px;}
+  .invalid{border-color:var(--crit)!important; box-shadow:0 0 0 3px rgba(210,59,59,.14)!important;}
+
+  .tiles{display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;}
+  .tile{
+    text-align:left; cursor:pointer; background:var(--surface-2); color:var(--ink);
+    border:1.5px solid var(--line); border-radius:12px; padding:12px 11px 13px;
+    display:flex; flex-direction:column; gap:3px; transition:border-color .12s, background .12s;
+    font-family:var(--font-body);
+  }
+  .tile .sz{font-family:var(--font-display); font-weight:700; font-size:14px;}
+  .tile .px{font-family:var(--font-mono); font-weight:600; font-size:17px; color:var(--accent);}
+  .tile .ex{font-size:11px; color:var(--muted); line-height:1.35;}
+  .tile[aria-pressed=true]{border-color:var(--accent); background:var(--accent-soft);}
+  .tile[aria-pressed=true] .ex{color:var(--ink);}
+  @media (max-width:400px){
+    .tiles{grid-template-columns:1fr;}
+    .tile{flex-direction:row; align-items:baseline; flex-wrap:wrap; gap:4px 10px;}
+    .tile .ex{flex-basis:100%;}
+  }
+
+  .stack{display:flex; flex-direction:column; gap:14px;}
+
+  .switch{
+    display:flex; align-items:center; gap:12px; cursor:pointer;
+    background:var(--surface-2); border:1.5px solid var(--line);
+    border-radius:12px; padding:12px 13px;
+  }
+  .switch .track{width:42px; height:25px; border-radius:20px; background:var(--line); flex:none; position:relative; transition:background .15s;}
+  .switch .track::after{
+    content:""; position:absolute; top:2.5px; left:2.5px; width:20px; height:20px;
+    border-radius:50%; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.3); transition:left .15s;
+  }
+  .switch[aria-pressed=true] .track{background:var(--accent);}
+  .switch[aria-pressed=true] .track::after{left:19.5px;}
+  .switch .txt b{font-weight:600; font-size:14px;}
+  .switch .txt span{display:block; font-size:12px; color:var(--muted);}
+
+  .note{
+    font-size:12.5px; border-radius:10px; padding:10px 12px; margin-top:10px;
+    background:var(--warn-soft); color:var(--ink); border:1px solid var(--line);
+    display:flex; gap:8px; align-items:flex-start;
+  }
+  .note svg{flex:none; margin-top:1px;}
+
+  .qty{display:flex; align-items:center; gap:0; width:132px;}
+  .qty button{
+    width:38px; height:44px; font-size:20px; font-family:var(--font-mono);
+    background:var(--surface-2); border:1.5px solid var(--line); color:var(--ink); cursor:pointer;
+  }
+  .qty button:first-child{border-radius:10px 0 0 10px;}
+  .qty button:last-child{border-radius:0 10px 10px 0;}
+  .qty input{width:56px; text-align:center; border-radius:0; border-left:none; border-right:none; font-family:var(--font-mono); font-weight:600; padding:11px 0;}
+  .seg{display:grid; grid-template-columns:1fr 1fr; gap:8px;}
+  .seg button{
+    font-family:var(--font-body); font-size:14px; font-weight:600; cursor:pointer;
+    background:var(--surface-2); border:1.5px solid var(--line); color:var(--ink);
+    border-radius:10px; padding:12px 8px; display:flex; flex-direction:column; gap:2px; align-items:center;
+  }
+  .seg button .s{font-size:11px; font-weight:500; color:var(--muted);}
+  .seg button[aria-pressed=true]{border-color:var(--accent); background:var(--accent-soft);}
+
+  .pricebar{
+    position:fixed; left:0; right:0; bottom:0; z-index:20;
+    background:var(--surface); border-top:1px solid var(--line);
+    padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));
+    box-shadow:0 -6px 24px rgba(20,24,29,.10);
+  }
+  .pricebar .inner{max-width:560px; margin:0 auto; display:flex; align-items:center; gap:12px;}
+  .price{display:flex; flex-direction:column; line-height:1.05; min-width:0;}
+  .price .lbl{font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); font-weight:600;}
+  .price .val{font-family:var(--font-mono); font-weight:600; font-size:26px; letter-spacing:-.02em; white-space:nowrap;}
+  .price .val.custom{font-size:19px; color:var(--warn);}
+  .price .meta{font-size:11px; color:var(--muted); margin-top:1px;}
+  .cta{
+    margin-left:auto; flex:none; font-family:var(--font-display); font-weight:700; font-size:15.5px;
+    background:var(--accent); color:var(--accent-ink); border:none; border-radius:12px;
+    padding:13px 20px; cursor:pointer; box-shadow:var(--shadow); transition:transform .08s, filter .12s;
+  }
+  .cta:hover{filter:brightness(1.05);} .cta:active{transform:translateY(1px);}
+  .cta:disabled{opacity:.6; cursor:progress;}
+
+  .faq h3{font-family:var(--font-display); font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin:26px 4px 6px;}
+  details{background:var(--surface); border:1px solid var(--line); border-radius:12px; margin-top:8px; overflow:hidden;}
+  summary{list-style:none; cursor:pointer; padding:14px 16px; font-weight:600; font-size:14.5px; display:flex; align-items:center; gap:10px;}
+  summary::-webkit-details-marker{display:none;}
+  summary .plus{margin-left:auto; color:var(--accent); font-family:var(--font-mono); font-size:18px; transition:transform .15s;}
+  details[open] summary .plus{transform:rotate(45deg);}
+  details .body{padding:0 16px 15px; font-size:13.5px; color:var(--muted); line-height:1.55;}
+  details .body strong{color:var(--ink); font-weight:600;}
+
+  .ticket{background:var(--surface); border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow); overflow:hidden;}
+  .ticket .head{background:var(--accent); color:var(--accent-ink); padding:20px 20px 18px;}
+  .ticket .head .big{font-family:var(--font-display); font-weight:800; font-size:22px; margin:6px 0 2px;}
+  .ticket .head .small{font-size:13px; opacity:.9;}
+  .ticket dl{margin:0; padding:6px 20px 8px;}
+  .ticket .line{display:flex; justify-content:space-between; gap:16px; padding:11px 0; border-bottom:1px solid var(--line-2); font-size:14px;}
+  .ticket .line:last-child{border-bottom:none;}
+  .ticket dt{color:var(--muted);} .ticket dd{margin:0; text-align:right; font-weight:500; word-break:break-word;}
+  .ticket dd.mono{font-family:var(--font-mono);}
+  .ticket dd a{color:var(--accent); text-decoration:none;}
+  .pay{margin-top:12px; background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:16px 18px; box-shadow:var(--shadow);}
+  .pay h3{font-family:var(--font-display); font-size:15.5px; margin:0 0 4px; letter-spacing:-.005em;}
+  .pay p{font-size:13px; color:var(--muted); margin:0 0 12px;}
+  .paybtns{display:grid; grid-template-columns:1fr 1fr; gap:8px;}
+  .paybtn{display:flex; align-items:center; justify-content:center; gap:8px; text-decoration:none; font-family:var(--font-display); font-weight:700; font-size:14.5px; border-radius:11px; padding:13px 10px; transition:filter .12s, transform .08s; border:1.5px solid transparent;}
+  .paybtn:hover{filter:brightness(1.06);} .paybtn:active{transform:translateY(1px);}
+  .paybtn.cash{background:#00D632; color:#062b10;}
+  .paybtn.venmo{background:#008CFF; color:#ffffff;}
+  .pay .alt{font-size:12px; color:var(--muted); margin:10px 0 0; text-align:center;}
+  .warnbox{margin-top:12px; background:var(--warn-soft); border:1px solid var(--line); border-radius:12px; padding:12px 14px; font-size:13px; color:var(--ink);}
+  .ghost{
+    width:100%; margin-top:10px; font-family:var(--font-body); font-weight:600; font-size:14px;
+    background:var(--surface-2); color:var(--ink); border:1.5px solid var(--line); border-radius:11px;
+    padding:12px; cursor:pointer;
+  }
+  .ghost:hover{border-color:var(--accent);}
+  .backlink{display:inline-block; margin-top:14px; font-size:13px; color:var(--muted); background:none; border:none; cursor:pointer; text-decoration:underline; font-family:var(--font-body);}
+  .footnote{font-size:11.5px; color:var(--muted); text-align:center; margin:20px 4px 0; line-height:1.5;}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;}}
+</style>
+</head>
+<body>
+
+<!-- Netlify form detection (hidden). Field names must match what the script posts. -->
+<form name="order" netlify netlify-honeypot="bot-field" hidden>
+  <input type="text" name="bot-field">
+  <input type="text" name="name">
+  <input type="text" name="contact">
+  <input type="text" name="link">
+  <input type="text" name="what">
+  <input type="text" name="size">
+  <input type="text" name="material">
+  <input type="text" name="color">
+  <input type="text" name="multicolor">
+  <input type="text" name="qty">
+  <input type="text" name="rush">
+  <input type="text" name="delivery">
+  <input type="text" name="needby">
+  <input type="text" name="quote">
+  <input type="text" name="pay">
+  <textarea name="summary"></textarea>
+</form>
+
+<div class="wrap" id="app">
+  <header class="top">
+    <div class="brand">
+      <div class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l-1 5H7L6 3z"/><path d="M12 8v6"/><rect x="9" y="14" width="6" height="7" rx="1"/></svg>
+      </div>
+      <div>
+        <h1>Alamo 3D</h1>
+        <div class="sub">Custom 3D printing &middot; PLA+ &amp; PETG &middot; local pickup + shipping</div>
+      </div>
+    </div>
+    <p class="lede">Send me the model, get your price. <strong>Every quote needs a link to the model</strong> (a Printables, MakerWorld, or Thingiverse page). No link, no quote, so grab one first.</p>
+  </header>
+
+  <form id="quoteForm" novalidate>
+    <div class="card">
+      <div class="step"><span class="n">1</span><h2>The model</h2><span class="req">Required</span></div>
+      <label class="fld" for="link">
+        <p class="hint">Paste the link to the model you want printed. Free models live on <a href="https://www.printables.com" target="_blank" rel="noopener">Printables</a>, <a href="https://makerworld.com" target="_blank" rel="noopener">MakerWorld</a>, and <a href="https://www.thingiverse.com" target="_blank" rel="noopener">Thingiverse</a>.</p>
+        <input type="url" id="link" name="link" placeholder="https://www.printables.com/model/..." autocomplete="off" inputmode="url">
+      </label>
+      <label class="fld" for="what" style="margin-top:13px; display:block;">
+        <p class="hint">What is it? <span style="opacity:.7">(optional, helps me eyeball it)</span></p>
+        <input type="text" id="what" name="what" placeholder="e.g. Charizard figure, phone stand, D&amp;D minis">
+      </label>
+    </div>
+
+    <div class="card">
+      <div class="step"><span class="n">2</span><h2>How big?</h2><span class="req">Required</span></div>
+      <p class="hint">Best guess is fine. I confirm the final size and price when I check the model.</p>
+      <div class="tiles" id="sizeTiles">
+        <button type="button" class="tile" data-size="S" data-price="20" aria-pressed="false">
+          <span class="sz">Small</span><span class="px">$20</span>
+          <span class="ex">Palm-size. Keychains, small figures, minis.</span>
+        </button>
+        <button type="button" class="tile" data-size="M" data-price="45" aria-pressed="true">
+          <span class="sz">Medium</span><span class="px">$45</span>
+          <span class="ex">Hand-size. Most figurines, desk stuff.</span>
+        </button>
+        <button type="button" class="tile" data-size="L" data-price="90" aria-pressed="false">
+          <span class="sz">Large</span><span class="px">$90+</span>
+          <span class="ex">Big. Helmets, props, 8&quot;+ pieces.</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="step"><span class="n">3</span><h2>Material &amp; color</h2></div>
+      <label class="fld" for="material">
+        <p class="hint">Listed prices are for <strong style="color:var(--ink)">PLA+ or PETG</strong>. Need something else? Pick it and I'll quote it separately.</p>
+        <select id="material" name="material">
+          <option value="PLA+">PLA+ (default, most prints)</option>
+          <option value="PETG">PETG (tougher, handles heat)</option>
+          <option value="exotic">Something else (TPU, ABS/ASA, carbon fiber, silk...)</option>
+        </select>
+      </label>
+      <div class="note" id="exoticNote" hidden>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16.5v.01"/></svg>
+        <span style="flex:1">Exotic materials get a <strong>custom quote</strong>, since the price depends on what the material needs to print right. Tell me which one:
+          <input type="text" id="materialOther" placeholder="e.g. TPU, ASA, carbon fiber PETG" style="margin-top:8px">
+        </span>
+      </div>
+      <label class="fld" for="color" style="margin-top:13px; display:block;">
+        <p class="hint">One color is the base price, whatever color you want. Want it in a specific one?</p>
+        <select id="color" name="color">
+          <option value="Your pick (I'll match the model)">Your pick, I'll match the model</option>
+          <option>Black</option><option>White</option><option>Gray</option>
+          <option>Red</option><option>Blue</option><option>Green</option>
+          <option>Yellow</option><option>Orange</option><option>Purple</option>
+          <option>Pink</option><option>Silver</option><option>Gold</option>
+          <option>Glow-in-the-dark</option><option>Other (tell me below)</option>
+        </select>
+      </label>
+      <div class="switch" id="multiToggle" role="button" tabindex="0" aria-pressed="false" style="margin-top:13px;">
+        <span class="track" aria-hidden="true"></span>
+        <span class="txt"><b>Needs multiple colors</b><span>Actual color changes in the print, not painting it after</span></span>
+      </div>
+      <div class="note" id="multiNote" hidden>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16.5v.01"/></svg>
+        <span>Multicolor prints get a <strong>custom quote</strong>, since the price depends on how many color swaps the model needs. Fill out the rest and send it, I'll price it and get back to you fast.</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="step"><span class="n">4</span><h2>The details</h2></div>
+      <div class="stack">
+        <div>
+          <p class="hint">How many?</p>
+          <div class="qty">
+            <button type="button" id="qtyMinus" aria-label="Decrease quantity">&minus;</button>
+            <input type="text" id="qty" name="qty" value="1" inputmode="numeric" aria-label="Quantity">
+            <button type="button" id="qtyPlus" aria-label="Increase quantity">+</button>
+          </div>
+        </div>
+        <div class="switch" id="rushToggle" role="button" tabindex="0" aria-pressed="false">
+          <span class="track" aria-hidden="true"></span>
+          <span class="txt"><b>Need it fast (rush)</b><span>Bumped to the front of the queue &middot; +25%</span></span>
+        </div>
+        <div>
+          <p class="hint">Pickup or shipping?</p>
+          <div class="seg" id="delivery">
+            <button type="button" data-del="pickup" data-fee="0" aria-pressed="true">Local pickup<span class="s">San Antonio &middot; free</span></button>
+            <button type="button" data-del="ship" data-fee="8" aria-pressed="false">Ship it<span class="s">+$8 flat</span></button>
+          </div>
+        </div>
+        <label class="fld" for="needby">
+          <p class="hint">Need it by a certain date? <span style="opacity:.7">(optional)</span></p>
+          <input type="date" id="needby" name="needby">
+        </label>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="step"><span class="n">5</span><h2>Where do I reach you?</h2><span class="req">Required</span></div>
+      <div class="stack">
+        <label class="fld" for="name">
+          <p class="hint">Your name</p>
+          <input type="text" id="name" name="name" placeholder="First name" autocomplete="given-name">
+        </label>
+        <label class="fld" for="contact">
+          <p class="hint">Email or phone number</p>
+          <input type="text" id="contact" name="contact" placeholder="you@email.com or (210) 555-0123" autocomplete="email">
+        </label>
+      </div>
+    </div>
+  </form>
+
+  <section class="faq">
+    <h3>Before you ask</h3>
+    <details>
+      <summary>What's a model link / STL? <span class="plus">+</span></summary>
+      <div class="body">A model is the 3D file I print from. You don't need the file itself, just the <strong>link to its page</strong> on a site like Printables or MakerWorld. Search what you want, copy the page URL, paste it above. If there's no model, there's nothing to print, so I can't quote it.</div>
+    </details>
+    <details>
+      <summary>Why does one color cost less than multicolor? <span class="plus">+</span></summary>
+      <div class="body">The <strong>color</strong> doesn't cost more, black or hot pink is the same price. What costs more is the printer swapping between colors mid-print: it takes longer and wastes filament every swap. So single-color is a flat price, and multicolor gets a custom quote.</div>
+    </details>
+    <details>
+      <summary>What material do you print in? <span class="plus">+</span></summary>
+      <div class="body">Listed prices are for <strong>PLA+ and PETG</strong>, which covers almost everything: figures, props, desk stuff, functional parts. PLA+ is the default. PETG if it needs to be tougher or live in a hot car. Want something more exotic (TPU, ABS/ASA, carbon fiber, silk, whatever)? Ask, most of it's doable, it just gets <strong>quoted separately</strong> based on what that material needs to print right.</div>
+    </details>
+    <details>
+      <summary>Can I just paint it myself? <span class="plus">+</span></summary>
+      <div class="body">Absolutely, and it's cheaper. Order it in <strong>one color (white or gray primes best)</strong> and paint the details yourself. Lots of people do this for figures.</div>
+    </details>
+    <details>
+      <summary>Do you do custom design work? <span class="plus">+</span></summary>
+      <div class="body">Mostly I print existing models you find and link. If you've got your own file or a true custom idea, send it over anyway, I'll take a look, but custom design runs higher and takes longer.</div>
+    </details>
+    <details>
+      <summary>How's the price figured? <span class="plus">+</span></summary>
+      <div class="body">Flat by size for standard single-color prints. <strong>Really big or complex</strong> ones (over ~20 hrs of print time) I confirm with a custom number so nobody gets surprised. You'll always okay the final price before I start.</div>
+    </details>
+  </section>
+
+  <p class="footnote">Quote is an estimate for standard single-color PLA+ or PETG prints. Exotic materials quoted separately. Final price confirmed before printing. San Antonio, TX.</p>
+</div>
+
+<div class="pricebar" id="pricebar">
+  <div class="inner">
+    <div class="price">
+      <span class="lbl" id="priceLbl">Your quote</span>
+      <span class="val" id="priceVal">$45</span>
+      <span class="meta" id="priceMeta">Medium &middot; 1 print &middot; pickup</span>
+    </div>
+    <button class="cta" id="submitBtn" type="submit" form="quoteForm">Send order</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var CASHTAG = "TheOscarMallen", VENMO = "OscarMallen";
+  var state = { size:"M", basePrice:45, qty:1, rush:false, multi:false, exotic:false, del:"pickup", fee:0 };
+  var $ = function(id){ return document.getElementById(id); };
+  var fmt = function(n){ return "$" + Math.round(n); };
+
+  var tiles = document.querySelectorAll("#sizeTiles .tile");
+  tiles.forEach(function(t){
+    t.addEventListener("click", function(){
+      tiles.forEach(function(x){ x.setAttribute("aria-pressed","false"); });
+      t.setAttribute("aria-pressed","true");
+      state.size = t.dataset.size;
+      state.basePrice = parseInt(t.dataset.price,10);
+      render();
+    });
+  });
+
+  function wireSwitch(el, key, after){
+    function toggle(){
+      var on = el.getAttribute("aria-pressed") === "true";
+      el.setAttribute("aria-pressed", (!on).toString());
+      state[key] = !on;
+      if(after) after(!on);
+      render();
+    }
+    el.addEventListener("click", toggle);
+    el.addEventListener("keydown", function(e){
+      if(e.key === " " || e.key === "Enter"){ e.preventDefault(); toggle(); }
+    });
+  }
+  wireSwitch($("rushToggle"), "rush");
+  wireSwitch($("multiToggle"), "multi", function(on){ $("multiNote").hidden = !on; });
+
+  var matSel = $("material");
+  matSel.addEventListener("change", function(){
+    state.exotic = matSel.value === "exotic";
+    $("exoticNote").hidden = !state.exotic;
+    if(state.exotic) $("materialOther").focus();
+    render();
+  });
+
+  var delBtns = document.querySelectorAll("#delivery button");
+  delBtns.forEach(function(b){
+    b.addEventListener("click", function(){
+      delBtns.forEach(function(x){ x.setAttribute("aria-pressed","false"); });
+      b.setAttribute("aria-pressed","true");
+      state.del = b.dataset.del; state.fee = parseInt(b.dataset.fee,10);
+      render();
+    });
+  });
+
+  var qtyInput = $("qty");
+  function setQty(v){ v = Math.max(1, Math.min(50, v||1)); state.qty = v; qtyInput.value = v; render(); }
+  $("qtyMinus").addEventListener("click", function(){ setQty(state.qty-1); });
+  $("qtyPlus").addEventListener("click", function(){ setQty(state.qty+1); });
+  qtyInput.addEventListener("input", function(){ var v = parseInt(qtyInput.value.replace(/[^0-9]/g,''),10); state.qty = isNaN(v)?1:Math.max(1,Math.min(50,v)); render(); });
+  qtyInput.addEventListener("blur", function(){ setQty(state.qty); });
+
+  function computeTotal(){
+    var per = state.basePrice * (state.rush ? 1.25 : 1);
+    return per * state.qty + state.fee;
+  }
+  function render(){
+    var val = $("priceVal"), meta = $("priceMeta"), lbl = $("priceLbl");
+    var sizeName = {S:"Small", M:"Medium", L:"Large"}[state.size];
+    var bits = [sizeName, state.qty + (state.qty>1?" prints":" print")];
+    if(state.rush) bits.push("rush");
+    bits.push(state.del === "ship" ? "shipped" : "pickup");
+    meta.innerHTML = bits.join(" &middot; ");
+
+    if(state.multi || state.exotic){
+      lbl.textContent = (state.multi && state.exotic) ? "Multicolor + material" : (state.multi ? "Multicolor" : "Exotic material");
+      val.textContent = "Custom quote";
+      val.classList.add("custom");
+    } else {
+      lbl.textContent = "Your quote";
+      val.classList.remove("custom");
+      var total = computeTotal();
+      val.textContent = (state.size === "L" ? fmt(total) + "+" : fmt(total));
+    }
+  }
+
+  function markInvalid(el, bad){ el.classList.toggle("invalid", bad); }
+  function esc(s){ return (s||"").replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]; }); }
+
+  $("quoteForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    var link = $("link"), name = $("name"), contact = $("contact");
+    var linkBad = !link.value.trim();
+    var nameBad = !name.value.trim();
+    var contactBad = !contact.value.trim();
+    markInvalid(link, linkBad); markInvalid(name, nameBad); markInvalid(contact, contactBad);
+    if(linkBad || nameBad || contactBad){
+      var first = linkBad ? link : (nameBad ? name : contact);
+      first.scrollIntoView({behavior:"smooth", block:"center"});
+      first.focus({preventScroll:true});
+      return;
+    }
+    var order = buildOrder();
+    var btn = $("submitBtn");
+    btn.disabled = true; btn.textContent = "Sending…";
+    sendOrder(order).then(function(ok){ showTicket(order, ok); }, function(){ showTicket(order, false); });
+  });
+
+  function buildOrder(){
+    var sizeName = {S:"Small", M:"Medium", L:"Large"}[state.size];
+    var link = $("link").value.trim();
+    var what = $("what").value.trim();
+    var color = $("color").value;
+    var material = $("material").value;
+    var materialOther = $("materialOther").value.trim();
+    var materialLabel = state.exotic ? ("Other: " + (materialOther || "not specified")) : material;
+    var needby = $("needby").value;
+    var name = $("name").value.trim();
+    var contact = $("contact").value.trim();
+
+    var customReason = [];
+    if(state.multi) customReason.push("multicolor");
+    if(state.exotic) customReason.push("material");
+    var isCustom = customReason.length > 0;
+
+    var priceText;
+    if(isCustom){ priceText = "Custom quote (" + customReason.join(" + ") + ")"; }
+    else { var t = computeTotal(); priceText = state.size === "L" ? fmt(t) + "+ (est.)" : fmt(t); }
+
+    var amountLocked = !isCustom && state.size !== "L";
+    var amt = amountLocked ? Math.round(computeTotal()) : null;
+    var payText = amt ? ("$" + amt + " via Cash App $" + CASHTAG + " or Venmo @" + VENMO)
+                      : ("after total is confirmed, Cash App $" + CASHTAG + " or Venmo @" + VENMO);
+    var deliveryText = state.del==="ship" ? "Ship (+$8)" : "Local pickup";
+
+    var summary = [
+      "NEW PRINT ORDER",
+      "Model: " + link,
+      what ? "What: " + what : null,
+      "Size: " + sizeName,
+      "Material: " + materialLabel,
+      "Color: " + (state.multi ? "Multiple colors (custom quote)" : color),
+      "Qty: " + state.qty,
+      state.rush ? "Rush: yes (+25%)" : null,
+      "Delivery: " + deliveryText,
+      needby ? "Needed by: " + needby : null,
+      "Quote: " + priceText,
+      "Pay: " + payText,
+      "Name: " + name,
+      "Contact: " + contact
+    ].filter(Boolean).join("\n");
+
+    return {
+      sizeName:sizeName, link:link, what:what, color:color, materialLabel:materialLabel,
+      needby:needby, name:name, contact:contact, isCustom:isCustom, priceText:priceText,
+      amt:amt, payText:payText, deliveryText:deliveryText, summary:summary,
+      fields:{
+        "form-name":"order", "bot-field":"",
+        name:name, contact:contact, link:link, what:what, size:sizeName,
+        material:materialLabel, color:(state.multi ? "Multiple colors" : color),
+        multicolor: state.multi ? "yes" : "no", qty:String(state.qty),
+        rush: state.rush ? "yes" : "no", delivery:deliveryText, needby:needby,
+        quote:priceText, pay:payText, summary:summary
+      }
+    };
+  }
+
+  function sendOrder(order){
+    if(location.protocol === "file:") return Promise.resolve(false);
+    var body = new URLSearchParams(order.fields).toString();
+    var ctrl = ("AbortController" in window) ? new AbortController() : null;
+    var timer = ctrl ? setTimeout(function(){ ctrl.abort(); }, 12000) : null;
+    return fetch("/", {
+      method:"POST",
+      headers:{ "Content-Type":"application/x-www-form-urlencoded" },
+      body:body,
+      signal: ctrl ? ctrl.signal : undefined
+    }).then(function(r){ if(timer) clearTimeout(timer); return r.ok; }, function(){ if(timer) clearTimeout(timer); return false; });
+  }
+
+  function showTicket(o, sent){
+    var payNote = encodeURIComponent("3D print order" + (o.name ? " - " + o.name : ""));
+    var cashUrl = "https://cash.app/$" + CASHTAG + (o.amt ? "/" + o.amt : "");
+    var venmoUrl = "https://venmo.com/" + VENMO + "?txn=pay" + (o.amt ? "&amount=" + o.amt : "") + "&note=" + payNote;
+
+    var rows = "";
+    function row(k,v,mono){ if(!v) return; rows += '<div class="line"><dt>'+k+'</dt><dd class="'+(mono?"mono":"")+'">'+v+'</dd></div>'; }
+    row("Model", '<a href="'+esc(o.link)+'" target="_blank" rel="noopener">View link &nearr;</a>');
+    row("What", esc(o.what));
+    row("Size", o.sizeName + (o.sizeName==="Large" ? " (confirming)" : ""));
+    row("Material", esc(o.materialLabel));
+    row("Color", state.multi ? "Multiple colors" : esc(o.color));
+    row("Quantity", String(state.qty), true);
+    if(state.rush) row("Speed", "Rush (+25%)");
+    row("Delivery", o.deliveryText);
+    if(o.needby) row("Needed by", esc(o.needby), true);
+    row("Name", esc(o.name));
+    row("Contact", esc(o.contact), true);
+
+    var payHtml = '<div class="pay">' +
+      (o.amt
+        ? '<h3>Pay $' + o.amt + ' to lock it in</h3><p>Amount\'s already filled in. Tap one, hit send, you\'re in the queue.</p>'
+        : '<h3>Payment</h3><p>I\'ll confirm your total first, then you pay with either of these:</p>') +
+      '<div class="paybtns">' +
+      '<a class="paybtn cash" href="' + cashUrl + '" target="_blank" rel="noopener">Cash App</a>' +
+      '<a class="paybtn venmo" href="' + venmoUrl + '" target="_blank" rel="noopener">Venmo</a>' +
+      '</div><p class="alt">Or Apple Pay / cash at pickup.</p></div>';
+
+    var headTitle = sent ? "Order sent" : "Order ready";
+    var headSub = sent ? "You're in the queue. I'll confirm and reach out." : "Review it below";
+    var headSmall = o.isCustom ? "I\'ll send your exact price shortly"
+                   : (o.sizeName==="Large" ? "Final price confirmed after I check the model" : "Locked in for a single-color PLA+ / PETG print");
+    var warn = sent ? "" :
+      '<div class="warnbox"><strong>Heads up:</strong> the order didn\'t send automatically (bad signal, maybe). Tap <strong>Copy order details</strong> and message it to me on Facebook so it doesn\'t get lost.</div>';
+
+    var app = $("app");
+    app.innerHTML =
+      '<header class="top"><div class="brand"><div class="mark" aria-hidden="true">'+
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>'+
+      '<div><h1>'+headTitle+'</h1><div class="sub">'+headSub+'</div></div></div></header>'+
+      '<div class="ticket"><div class="head"><div class="small">' + (o.isCustom ? "Quote" : "Your quote") + '</div>'+
+      '<div class="big">'+o.priceText+'</div>'+
+      '<div class="small">'+headSmall+'</div></div>'+
+      '<dl>'+rows+'</dl></div>'+
+      payHtml + warn +
+      '<button class="ghost" id="copyBtn">Copy order details</button>'+
+      '<button class="backlink" id="editBtn">&larr; Start another order</button>'+
+      '<p class="footnote">Alamo 3D &middot; San Antonio, TX</p>';
+
+    document.getElementById("pricebar").hidden = true;
+    window.scrollTo({top:0, behavior:"smooth"});
+
+    $("copyBtn").addEventListener("click", function(){
+      var btn = this;
+      function done(){ btn.textContent = "Copied ✓"; setTimeout(function(){ btn.textContent = "Copy order details"; }, 1800); }
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(o.summary).then(done, function(){ fallbackCopy(o.summary); done(); });
+      } else { fallbackCopy(o.summary); done(); }
+    });
+    $("editBtn").addEventListener("click", function(){ location.reload(); });
+  }
+  function fallbackCopy(text){
+    var ta = document.createElement("textarea"); ta.value = text;
+    ta.style.position="fixed"; ta.style.opacity="0"; document.body.appendChild(ta);
+    ta.select(); try{ document.execCommand("copy"); }catch(e){} document.body.removeChild(ta);
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>
