@@ -239,6 +239,7 @@
   <input type="text" name="needby">
   <input type="text" name="quote">
   <input type="text" name="pay">
+  <textarea name="notes"></textarea>
   <textarea name="summary"></textarea>
 </form>
 
@@ -284,11 +285,11 @@
       <div class="tiles" id="sizeTiles">
         <button type="button" class="tile" data-size="S" data-price="20" aria-pressed="false">
           <span class="sz">Small</span><span class="px">$20</span>
-          <span class="ex">Under ~4&quot;. Keychains, minis, small figures.</span>
+          <span class="ex">Up to 4&quot;. Keychains, minis, small figures.</span>
         </button>
         <button type="button" class="tile" data-size="M" data-price="45" aria-pressed="true">
           <span class="sz">Medium</span><span class="px">$45</span>
-          <span class="ex">4 to 6&quot;. Most figurines, desk stuff.</span>
+          <span class="ex">Over 4&quot;, up to 6&quot;. Most figurines, desk stuff.</span>
         </button>
         <button type="button" class="tile" data-size="L" data-price="65" aria-pressed="false">
           <span class="sz">Large</span><span class="px">$65</span>
@@ -325,7 +326,7 @@
           <option>Red</option><option>Blue</option><option>Green</option>
           <option>Yellow</option><option>Orange</option><option>Purple</option>
           <option>Pink</option><option>Silver</option><option>Gold</option>
-          <option>Glow-in-the-dark</option><option>Other (tell me below)</option>
+          <option>Glow-in-the-dark</option><option>Other (I'll say in the notes)</option>
         </select>
       </label>
       <div class="switch" id="multiToggle" role="button" tabindex="0" aria-pressed="false" style="margin-top:13px;">
@@ -381,6 +382,10 @@
         <label class="fld" for="needby">
           <p class="hint">Need it by a certain date? <span style="opacity:.7">(optional)</span></p>
           <input type="date" id="needby" name="needby">
+        </label>
+        <label class="fld" for="notes">
+          <p class="hint">Anything else I should know? <span style="opacity:.7">(optional)</span></p>
+          <textarea id="notes" name="notes" rows="3" placeholder="e.g. exact color you want, which parts of the model, it's a gift for Friday, print it a little bigger than the tier if it fits"></textarea>
         </label>
       </div>
     </div>
@@ -453,7 +458,7 @@
     </details>
     <details>
       <summary>How big is Small / Medium / Large / XL, actually? <span class="plus">+</span></summary>
-      <div class="body">Rough guide by the longest side: <strong>Small</strong> under 4 inches (keychains, minis, small figures). <strong>Medium</strong> 4 to 6 inches (most figurines, desk stuff). <strong>Large</strong> 6 to 9 inches (masks, busts, two-hand pieces). <strong>XL</strong> 9 inches and up (helmets, big props), which is a $90 starting price I confirm before printing. Between two sizes? Pick the smaller one and I'll tell you if it needs a bump.</div>
+      <div class="body">Rough guide by the longest side: <strong>Small</strong> is anything up to 4 inches (keychains, minis, small figures). <strong>Medium</strong> is over 4 and up to 6 inches (most figurines, desk stuff). <strong>Large</strong> 6 to 9 inches (masks, busts, two-hand pieces). <strong>XL</strong> 9 inches and up (helmets, big props), which is a $90 starting price I confirm before printing. Between two sizes? Pick the smaller one and I'll tell you if it needs a bump.</div>
     </details>
     <details>
       <summary>What does the finished print look like? <span class="plus">+</span></summary>
@@ -473,7 +478,7 @@
     </details>
     <details>
       <summary>What if the model is bigger than the size I picked? <span class="plus">+</span></summary>
-      <div class="body">That's what the <strong>Looks / Function</strong> toggle is for. Pick <strong>Looks</strong> and you're buying a size: choose Small and I scale the model to under 4 inches. Pick <strong>Function</strong> and it prints at the model's real size, so choose the tier that matches its actual dimensions. If a functional part turns out bigger than the tier you paid for, I'll message you the difference before printing.</div>
+      <div class="body">That's what the <strong>Looks / Function</strong> toggle is for. Pick <strong>Looks</strong> and you're buying a size: choose Small and I scale the model to 4 inches or under. Pick <strong>Function</strong> and it prints at the model's real size, so choose the tier that matches its actual dimensions. If a functional part turns out bigger than the tier you paid for, I'll message you the difference before printing.</div>
     </details>
   </section>
 
@@ -639,6 +644,7 @@
     var materialOther = $("materialOther").value.trim();
     var materialLabel = state.exotic ? ("Other: " + (materialOther || "not specified")) : material;
     var needby = $("needby").value;
+    var notes = $("notes").value.trim();
     var name = $("name").value.trim();
     var contact = $("contact").value.trim();
 
@@ -671,6 +677,7 @@
       state.rush ? "Rush: yes (+25%)" : null,
       "Delivery: " + deliveryText,
       needby ? "Needed by: " + needby : null,
+      notes ? "Notes: " + notes : null,
       "Quote: " + priceText,
       "Pay: " + payText,
       "Name: " + name,
@@ -679,7 +686,7 @@
 
     return {
       sizeName:sizeName, link:link, what:what, color:color, materialLabel:materialLabel,
-      needby:needby, name:name, contact:contact, isCustom:isCustom, priceText:priceText,
+      needby:needby, notes:notes, name:name, contact:contact, isCustom:isCustom, priceText:priceText,
       amt:amt, payText:payText, deliveryText:deliveryText, summary:summary, bulkText:bulkText,
       fields:{
         "form-name":"order", "bot-field":"",
@@ -689,7 +696,7 @@
         purpose: state.purpose === "functional" ? "functional (real size)" : "looks (scale to tier)",
         finedetail: state.fine ? "yes (+30%)" : "no", strength: state.strong ? "yes (+20%)" : "no",
         qty:String(state.qty) + (bulkText ? " (bulk " + bulkText + ")" : (isBigBatch() ? " (big batch, custom quote)" : "")),
-        rush: state.rush ? "yes" : "no", delivery:deliveryText, needby:needby,
+        rush: state.rush ? "yes" : "no", delivery:deliveryText, needby:needby, notes:notes,
         quote:priceText, pay:payText, summary:summary
       }
     };
@@ -739,6 +746,7 @@
     if(state.rush) row("Speed", "Rush (+25%)");
     row("Delivery", o.deliveryText);
     if(o.needby) row("Needed by", esc(o.needby), true);
+    if(o.notes) row("Notes", esc(o.notes));
     row("Name", esc(o.name));
     row("Contact", esc(o.contact), true);
 
