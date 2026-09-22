@@ -168,6 +168,16 @@
   }
   .cta:hover{filter:brightness(1.05);} .cta:active{transform:translateY(1px);}
   .cta:disabled{opacity:.6; cursor:progress;}
+  .submitblock{margin-top:16px;}
+  .bigcta{
+    width:100%; font-family:var(--font-display); font-weight:800; font-size:17px;
+    background:var(--accent); color:var(--accent-ink); border:none; border-radius:14px;
+    padding:17px 20px; cursor:pointer; box-shadow:var(--shadow); transition:transform .08s, filter .12s;
+  }
+  .bigcta:hover{filter:brightness(1.05);} .bigcta:active{transform:translateY(1px);}
+  .bigcta:disabled{opacity:.6; cursor:progress;}
+  .submitnote{font-size:12.5px; color:var(--muted); text-align:center; margin:10px 6px 0; line-height:1.5;}
+  .submitnote strong{color:var(--ink); font-weight:600;}
 
   .faq h3{font-family:var(--font-display); font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin:26px 4px 6px;}
   details{background:var(--surface); border:1px solid var(--line); border-radius:12px; margin-top:8px; overflow:hidden;}
@@ -260,7 +270,7 @@
 
     <div class="card">
       <div class="step"><span class="n">2</span><h2>How big?</h2><span class="req">Required</span></div>
-      <p class="hint">Best guess is fine. I confirm the final size and price when I check the model.</p>
+      <p class="hint">Best guess is fine. Figures and decor get <strong style="color:var(--ink)">scaled to the size you pick</strong>. Functional parts print at their real size, so if that lands in a bigger tier I'll tell you before printing.</p>
       <div class="tiles" id="sizeTiles">
         <button type="button" class="tile" data-size="S" data-price="20" aria-pressed="false">
           <span class="sz">Small</span><span class="px">$20</span>
@@ -356,6 +366,11 @@
         </label>
       </div>
     </div>
+
+    <div class="submitblock">
+      <button class="bigcta" id="submitBtnInline" type="submit">Send my order &rarr;</button>
+      <p class="submitnote">Next you'll see your quote and the payment options. <strong>Nothing is charged automatically.</strong> You pay only after you see the price, and I confirm before anything prints.</p>
+    </div>
   </form>
 
   <section class="faq">
@@ -383,6 +398,14 @@
     <details>
       <summary>How's the price figured? <span class="plus">+</span></summary>
       <div class="body">Flat by size for standard single-color prints. <strong>Really big or complex</strong> ones (over ~20 hrs of print time) I confirm with a custom number so nobody gets surprised. You'll always okay the final price before I start.</div>
+    </details>
+    <details>
+      <summary>Do I get charged when I hit send? <span class="plus">+</span></summary>
+      <div class="body"><strong>No. Nothing is charged automatically.</strong> Sending the order puts you in my queue and shows you the price. Then you choose to pay through Cash App or Venmo (the amount's pre-filled), or Apple Pay / cash at pickup. I confirm the order before anything prints.</div>
+    </details>
+    <details>
+      <summary>What if the model is bigger than the size I picked? <span class="plus">+</span></summary>
+      <div class="body">For <strong>figures, props, and decor</strong> you're buying a size: pick Small and I scale the model down to palm-size. <strong>Functional parts</strong> (stands, brackets, replacement pieces) have to print at their real size or they won't work, so if that lands in a bigger tier than you picked, I'll message you with the right price before printing.</div>
     </details>
   </section>
 
@@ -500,8 +523,9 @@
       return;
     }
     var order = buildOrder();
-    var btn = $("submitBtn");
+    var btn = $("submitBtn"), btn2 = $("submitBtnInline");
     btn.disabled = true; btn.textContent = "Sending…";
+    if(btn2){ btn2.disabled = true; btn2.textContent = "Sending…"; }
     sendOrder(order).then(function(ok){ showTicket(order, ok); }, function(){ showTicket(order, false); });
   });
 
