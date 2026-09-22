@@ -230,6 +230,9 @@
   <input type="text" name="material">
   <input type="text" name="color">
   <input type="text" name="multicolor">
+  <input type="text" name="purpose">
+  <input type="text" name="finedetail">
+  <input type="text" name="strength">
   <input type="text" name="qty">
   <input type="text" name="rush">
   <input type="text" name="delivery">
@@ -268,7 +271,16 @@
 
     <div class="card">
       <div class="step"><span class="n">2</span><h2>How big?</h2><span class="req">Required</span></div>
-      <p class="hint">Best guess is fine. Figures and decor get <strong style="color:var(--ink)">scaled to the size you pick</strong>. Functional parts print at their real size, so if that lands in a bigger tier I'll tell you before printing.</p>
+      <p class="hint">First, what's it for?</p>
+      <div class="seg" id="purpose" style="margin-bottom:13px">
+        <button type="button" data-purpose="decor" aria-pressed="true">Looks<span class="s">Figure, decor, prop. I scale it to the size you pick.</span></button>
+        <button type="button" data-purpose="functional" aria-pressed="false">Function<span class="s">Has to fit or work. Printed at real size.</span></button>
+      </div>
+      <div class="note" id="functionalNote" hidden>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16.5v.01"/></svg>
+        <span>Functional parts print at the model's <strong>real size</strong>, so pick the tier that matches its actual dimensions. If I see it's bigger than what you paid for, I'll message you the difference before printing.</span>
+      </div>
+      <p class="hint" id="sizeHint">Best guess is fine. I'll tell you before printing if it needs a bump.</p>
       <div class="tiles" id="sizeTiles">
         <button type="button" class="tile" data-size="S" data-price="20" aria-pressed="false">
           <span class="sz">Small</span><span class="px">$20</span>
@@ -327,7 +339,21 @@
     </div>
 
     <div class="card">
-      <div class="step"><span class="n">4</span><h2>The details</h2></div>
+      <div class="step"><span class="n">4</span><h2>Add-ons</h2><span class="opt">Optional</span></div>
+      <div class="stack">
+        <div class="switch" id="fineToggle" role="button" tabindex="0" aria-pressed="false">
+          <span class="track" aria-hidden="true"></span>
+          <span class="txt"><b>Fine detail &middot; +30%</b><span>Thinner 0.12mm layers, smoother surface. Worth it on figures and busts.</span></span>
+        </div>
+        <div class="switch" id="strongToggle" role="button" tabindex="0" aria-pressed="false">
+          <span class="track" aria-hidden="true"></span>
+          <span class="txt"><b>Extra strength &middot; +20%</b><span>Thicker walls, denser infill. For parts that take load or get handled a lot.</span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="step"><span class="n">5</span><h2>The details</h2></div>
       <div class="stack">
         <div>
           <p class="hint">How many? <span style="opacity:.8">5+ gets <strong style="color:var(--ink)">10% off</strong>, 10+ gets <strong style="color:var(--ink)">20% off</strong>, automatically.</span></p>
@@ -360,7 +386,7 @@
     </div>
 
     <div class="card">
-      <div class="step"><span class="n">5</span><h2>Where do I reach you?</h2><span class="req">Required</span></div>
+      <div class="step"><span class="n">6</span><h2>Where do I reach you?</h2><span class="req">Required</span></div>
       <div class="stack">
         <label class="fld" for="name">
           <p class="hint">Your name</p>
@@ -442,8 +468,12 @@
       <div class="body">Bulk pricing is automatic: <strong>5 to 9</strong> of the same print is <strong>10% off</strong>, <strong>10 or more</strong> is <strong>20% off</strong>, and the price bar shows it as you bump the quantity. <strong>25 or more</strong> (a batch of keychains for an event, say) flips to a custom quote with real batch pricing, and I'll reach out with a number.</div>
     </details>
     <details>
+      <summary>What do Fine detail and Extra strength actually do? <span class="plus">+</span></summary>
+      <div class="body"><strong>Fine detail (+30%)</strong> prints at 0.12mm layers instead of 0.2mm: noticeably smoother surfaces and sharper small features, at about 1.6x the print time. Great on figures, busts, and anything you'll paint. <strong>Extra strength (+20%)</strong> uses thicker walls and denser infill, so the part takes load and abuse without cracking. Right call for hooks, brackets, handles, and anything kids will play with. You can stack both.</div>
+    </details>
+    <details>
       <summary>What if the model is bigger than the size I picked? <span class="plus">+</span></summary>
-      <div class="body">For <strong>figures, props, and decor</strong> you're buying a size: pick Small and I scale the model down to palm-size. <strong>Functional parts</strong> (stands, brackets, replacement pieces) have to print at their real size or they won't work, so if that lands in a bigger tier than you picked, I'll message you with the right price before printing.</div>
+      <div class="body">That's what the <strong>Looks / Function</strong> toggle is for. Pick <strong>Looks</strong> and you're buying a size: choose Small and I scale the model to under 4 inches. Pick <strong>Function</strong> and it prints at the model's real size, so choose the tier that matches its actual dimensions. If a functional part turns out bigger than the tier you paid for, I'll message you the difference before printing.</div>
     </details>
   </section>
 
@@ -467,7 +497,8 @@
   var SIZES = { S:"Small", M:"Medium", L:"Large", XL:"XL" };
   var BIG_BATCH = 25;                      // this many or more of one thing = custom quote
   function bulkRate(q){ return q >= 10 ? 0.20 : (q >= 5 ? 0.10 : 0); }
-  var state = { size:"M", basePrice:45, qty:1, rush:false, multi:false, exotic:false, del:"pickup", fee:0 };
+  var state = { size:"M", basePrice:45, qty:1, rush:false, multi:false, exotic:false, del:"pickup", fee:0, purpose:"decor", fine:false, strong:false };
+  var FINE_MULT = 1.30, STRONG_MULT = 1.20;
   function isBigBatch(){ return state.qty >= BIG_BATCH; }
   var $ = function(id){ return document.getElementById(id); };
   var fmt = function(n){ return "$" + Math.round(n); };
@@ -498,6 +529,20 @@
   }
   wireSwitch($("rushToggle"), "rush");
   wireSwitch($("multiToggle"), "multi", function(on){ $("multiNote").hidden = !on; });
+  wireSwitch($("fineToggle"), "fine");
+  wireSwitch($("strongToggle"), "strong");
+
+  // Purpose (looks vs function)
+  var purposeBtns = document.querySelectorAll("#purpose button");
+  purposeBtns.forEach(function(b){
+    b.addEventListener("click", function(){
+      purposeBtns.forEach(function(x){ x.setAttribute("aria-pressed","false"); });
+      b.setAttribute("aria-pressed","true");
+      state.purpose = b.dataset.purpose;
+      $("functionalNote").hidden = state.purpose !== "functional";
+      render();
+    });
+  });
 
   var matSel = $("material");
   matSel.addEventListener("change", function(){
@@ -525,7 +570,7 @@
   qtyInput.addEventListener("blur", function(){ setQty(state.qty); });
 
   function computeTotal(){
-    var per = state.basePrice * (state.rush ? 1.25 : 1);
+    var per = state.basePrice * (state.rush ? 1.25 : 1) * (state.fine ? FINE_MULT : 1) * (state.strong ? STRONG_MULT : 1);
     var sub = per * state.qty * (1 - bulkRate(state.qty));
     return sub + state.fee;
   }
@@ -542,6 +587,9 @@
     var bits = [SIZES[state.size], state.qty + (state.qty>1?" prints":" print")];
     var br = bulkRate(state.qty);
     if(br && !isBigBatch()) bits.push("bulk " + Math.round(br*100) + "% off");
+    if(state.purpose === "functional") bits.push("functional");
+    if(state.fine) bits.push("fine detail");
+    if(state.strong) bits.push("extra strength");
     if(state.rush) bits.push("rush");
     bits.push(state.del === "ship" ? "shipped" : "pickup");
     meta.innerHTML = bits.join(" &middot; ");
@@ -615,6 +663,9 @@
       "Size: " + sizeName,
       "Material: " + materialLabel,
       "Color: " + (state.multi ? "Multiple colors (custom quote)" : color),
+      "Purpose: " + (state.purpose === "functional" ? "Functional (print at real size)" : "Looks (scale to tier)"),
+      state.fine ? "Add-on: Fine detail (+30%)" : null,
+      state.strong ? "Add-on: Extra strength (+20%)" : null,
       "Qty: " + state.qty,
       bulkText ? "Bulk discount: " + bulkText : null,
       state.rush ? "Rush: yes (+25%)" : null,
@@ -634,7 +685,10 @@
         "form-name":"order", "bot-field":"",
         name:name, contact:contact, link:link, what:what, size:sizeName,
         material:materialLabel, color:(state.multi ? "Multiple colors" : color),
-        multicolor: state.multi ? "yes" : "no", qty:String(state.qty) + (bulkText ? " (bulk " + bulkText + ")" : (isBigBatch() ? " (big batch, custom quote)" : "")),
+        multicolor: state.multi ? "yes" : "no",
+        purpose: state.purpose === "functional" ? "functional (real size)" : "looks (scale to tier)",
+        finedetail: state.fine ? "yes (+30%)" : "no", strength: state.strong ? "yes (+20%)" : "no",
+        qty:String(state.qty) + (bulkText ? " (bulk " + bulkText + ")" : (isBigBatch() ? " (big batch, custom quote)" : "")),
         rush: state.rush ? "yes" : "no", delivery:deliveryText, needby:needby,
         quote:priceText, pay:payText, summary:summary
       }
@@ -675,6 +729,9 @@
     row("Model", '<a href="'+esc(o.link)+'" target="_blank" rel="noopener">View link &nearr;</a>');
     row("What", esc(o.what));
     row("Size", o.sizeName + (o.sizeName==="XL" ? " (starting price)" : ""));
+    row("Purpose", state.purpose === "functional" ? "Functional, real size" : "Looks, scaled to tier");
+    if(state.fine) row("Fine detail", "+30%");
+    if(state.strong) row("Extra strength", "+20%");
     row("Material", esc(o.materialLabel));
     row("Color", state.multi ? "Multiple colors" : esc(o.color));
     row("Quantity", String(state.qty) + (isBigBatch() ? " (big batch)" : ""), true);
