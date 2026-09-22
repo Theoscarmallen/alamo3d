@@ -90,7 +90,7 @@
   select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235A6472' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 13px center; padding-right:34px;}
   .invalid{border-color:var(--crit)!important; box-shadow:0 0 0 3px rgba(210,59,59,.14)!important;}
 
-  .tiles{display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;}
+  .tiles{display:grid; grid-template-columns:1fr 1fr; gap:8px;}
   .tile{
     text-align:left; cursor:pointer; background:var(--surface-2); color:var(--ink);
     border:1.5px solid var(--line); border-radius:12px; padding:12px 11px 13px;
@@ -102,10 +102,8 @@
   .tile .ex{font-size:11px; color:var(--muted); line-height:1.35;}
   .tile[aria-pressed=true]{border-color:var(--accent); background:var(--accent-soft);}
   .tile[aria-pressed=true] .ex{color:var(--ink);}
-  @media (max-width:400px){
+  @media (max-width:340px){
     .tiles{grid-template-columns:1fr;}
-    .tile{flex-direction:row; align-items:baseline; flex-wrap:wrap; gap:4px 10px;}
-    .tile .ex{flex-basis:100%;}
   }
 
   .stack{display:flex; flex-direction:column; gap:14px;}
@@ -274,15 +272,19 @@
       <div class="tiles" id="sizeTiles">
         <button type="button" class="tile" data-size="S" data-price="20" aria-pressed="false">
           <span class="sz">Small</span><span class="px">$20</span>
-          <span class="ex">Palm-size. Keychains, small figures, minis.</span>
+          <span class="ex">Under ~3&quot;. Keychains, minis, small figures.</span>
         </button>
         <button type="button" class="tile" data-size="M" data-price="45" aria-pressed="true">
           <span class="sz">Medium</span><span class="px">$45</span>
-          <span class="ex">Hand-size. Most figurines, desk stuff.</span>
+          <span class="ex">3 to 6&quot;. Most figurines, desk stuff.</span>
         </button>
-        <button type="button" class="tile" data-size="L" data-price="90" aria-pressed="false">
-          <span class="sz">Large</span><span class="px">$90+</span>
-          <span class="ex">Big. Helmets, props, 8&quot;+ pieces.</span>
+        <button type="button" class="tile" data-size="L" data-price="65" aria-pressed="false">
+          <span class="sz">Large</span><span class="px">$65</span>
+          <span class="ex">6 to 9&quot;. Masks, busts, two-hand pieces.</span>
+        </button>
+        <button type="button" class="tile" data-size="XL" data-price="90" aria-pressed="false">
+          <span class="sz">XL</span><span class="px">$90+</span>
+          <span class="ex">9&quot;+. Helmets, big props. Starting price.</span>
         </button>
       </div>
     </div>
@@ -328,11 +330,15 @@
       <div class="step"><span class="n">4</span><h2>The details</h2></div>
       <div class="stack">
         <div>
-          <p class="hint">How many?</p>
+          <p class="hint">How many? <span style="opacity:.8">5+ gets <strong style="color:var(--ink)">10% off</strong>, 10+ gets <strong style="color:var(--ink)">20% off</strong>, automatically.</span></p>
           <div class="qty">
             <button type="button" id="qtyMinus" aria-label="Decrease quantity">&minus;</button>
             <input type="text" id="qty" name="qty" value="1" inputmode="numeric" aria-label="Quantity">
             <button type="button" id="qtyPlus" aria-label="Increase quantity">+</button>
+          </div>
+          <div class="note" id="bigBatchNote" hidden>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><path d="M12 16.5v.01"/></svg>
+            <span><strong>Big batch.</strong> 25 or more of the same thing gets a custom quote with real bulk pricing. Send the request and I'll reach out with a number.</span>
           </div>
         </div>
         <div class="switch" id="rushToggle" role="button" tabindex="0" aria-pressed="false">
@@ -397,7 +403,7 @@
     </details>
     <details>
       <summary>How's the price figured? <span class="plus">+</span></summary>
-      <div class="body">Flat by size for standard single-color prints. <strong>Really big or complex</strong> ones (over ~20 hrs of print time) I confirm with a custom number so nobody gets surprised. You'll always okay the final price before I start.</div>
+      <div class="body">Flat by size for standard single-color prints: Small $20, Medium $45, Large $65, XL from $90. <strong>XL and anything really complex</strong> (20+ hours of print time) I confirm with an exact number so nobody gets surprised. Bulk discounts apply automatically at 5 and 10 prints.</div>
     </details>
     <details>
       <summary>Do I get charged when I hit send? <span class="plus">+</span></summary>
@@ -420,8 +426,8 @@
       <div class="body">Yep. Type <strong>"my own file"</strong> in the model link box, send the order, then email the STL or 3MF to <strong>orders@alamo3dprinting.com</strong> with your name. Same prices apply as long as it's a normal single-color print.</div>
     </details>
     <details>
-      <summary>How big is Small / Medium / Large, actually? <span class="plus">+</span></summary>
-      <div class="body">Rough guide: <strong>Small</strong> is under about 3 inches (keychains, minis, small figures). <strong>Medium</strong> is 3 to 6 inches (most figurines, desk stuff). <strong>Large</strong> is 6 to 8+ inches (masks, helmets, props). If you're between two, pick the smaller one and I'll tell you if it needs to be bumped.</div>
+      <summary>How big is Small / Medium / Large / XL, actually? <span class="plus">+</span></summary>
+      <div class="body">Rough guide by the longest side: <strong>Small</strong> under 3 inches (keychains, minis, small figures). <strong>Medium</strong> 3 to 6 inches (most figurines, desk stuff). <strong>Large</strong> 6 to 9 inches (masks, busts, two-hand pieces). <strong>XL</strong> 9 inches and up (helmets, big props), which is a $90 starting price I confirm before printing. Between two sizes? Pick the smaller one and I'll tell you if it needs a bump.</div>
     </details>
     <details>
       <summary>What does the finished print look like? <span class="plus">+</span></summary>
@@ -433,7 +439,7 @@
     </details>
     <details>
       <summary>Need a bunch of the same thing? <span class="plus">+</span></summary>
-      <div class="body">Set the quantity and you'll see the total. For <strong>10 or more</strong> of the same print, send it through and mention "bulk" in the What is it box, I'll knock the price down.</div>
+      <div class="body">Bulk pricing is automatic: <strong>5 to 9</strong> of the same print is <strong>10% off</strong>, <strong>10 or more</strong> is <strong>20% off</strong>, and the price bar shows it as you bump the quantity. <strong>25 or more</strong> (a batch of keychains for an event, say) flips to a custom quote with real batch pricing, and I'll reach out with a number.</div>
     </details>
     <details>
       <summary>What if the model is bigger than the size I picked? <span class="plus">+</span></summary>
@@ -441,7 +447,7 @@
     </details>
   </section>
 
-  <p class="footnote">Quote is an estimate for standard single-color PLA+ or PETG prints. Exotic materials quoted separately. Final price confirmed before printing. San Antonio, TX.</p>
+  <p class="footnote">Small $20 &middot; Medium $45 &middot; Large $65 &middot; XL from $90. Single-color PLA+ or PETG. Multicolor, exotic materials, and 25+ batches quoted separately. San Antonio, TX.</p>
 </div>
 
 <div class="pricebar" id="pricebar">
@@ -458,7 +464,11 @@
 <script>
 (function(){
   var CASHTAG = "TheOscarMallen", VENMO = "OscarMallen";
+  var SIZES = { S:"Small", M:"Medium", L:"Large", XL:"XL" };
+  var BIG_BATCH = 25;                      // this many or more of one thing = custom quote
+  function bulkRate(q){ return q >= 10 ? 0.20 : (q >= 5 ? 0.10 : 0); }
   var state = { size:"M", basePrice:45, qty:1, rush:false, multi:false, exotic:false, del:"pickup", fee:0 };
+  function isBigBatch(){ return state.qty >= BIG_BATCH; }
   var $ = function(id){ return document.getElementById(id); };
   var fmt = function(n){ return "$" + Math.round(n); };
 
@@ -508,33 +518,44 @@
   });
 
   var qtyInput = $("qty");
-  function setQty(v){ v = Math.max(1, Math.min(50, v||1)); state.qty = v; qtyInput.value = v; render(); }
+  function setQty(v){ v = Math.max(1, Math.min(999, v||1)); state.qty = v; qtyInput.value = v; render(); }
   $("qtyMinus").addEventListener("click", function(){ setQty(state.qty-1); });
   $("qtyPlus").addEventListener("click", function(){ setQty(state.qty+1); });
-  qtyInput.addEventListener("input", function(){ var v = parseInt(qtyInput.value.replace(/[^0-9]/g,''),10); state.qty = isNaN(v)?1:Math.max(1,Math.min(50,v)); render(); });
+  qtyInput.addEventListener("input", function(){ var v = parseInt(qtyInput.value.replace(/[^0-9]/g,''),10); state.qty = isNaN(v)?1:Math.max(1,Math.min(999,v)); render(); });
   qtyInput.addEventListener("blur", function(){ setQty(state.qty); });
 
   function computeTotal(){
     var per = state.basePrice * (state.rush ? 1.25 : 1);
-    return per * state.qty + state.fee;
+    var sub = per * state.qty * (1 - bulkRate(state.qty));
+    return sub + state.fee;
+  }
+  function customReasons(){
+    var r = [];
+    if(state.multi) r.push("Multicolor");
+    if(state.exotic) r.push("Exotic material");
+    if(isBigBatch()) r.push("Big batch");
+    return r;
   }
   function render(){
     var val = $("priceVal"), meta = $("priceMeta"), lbl = $("priceLbl");
-    var sizeName = {S:"Small", M:"Medium", L:"Large"}[state.size];
-    var bits = [sizeName, state.qty + (state.qty>1?" prints":" print")];
+    $("bigBatchNote").hidden = !isBigBatch();
+    var bits = [SIZES[state.size], state.qty + (state.qty>1?" prints":" print")];
+    var br = bulkRate(state.qty);
+    if(br && !isBigBatch()) bits.push("bulk " + Math.round(br*100) + "% off");
     if(state.rush) bits.push("rush");
     bits.push(state.del === "ship" ? "shipped" : "pickup");
     meta.innerHTML = bits.join(" &middot; ");
 
-    if(state.multi || state.exotic){
-      lbl.textContent = (state.multi && state.exotic) ? "Multicolor + material" : (state.multi ? "Multicolor" : "Exotic material");
+    var reasons = customReasons();
+    if(reasons.length){
+      lbl.textContent = reasons.join(" + ");
       val.textContent = "Custom quote";
       val.classList.add("custom");
     } else {
       lbl.textContent = "Your quote";
       val.classList.remove("custom");
       var total = computeTotal();
-      val.textContent = (state.size === "L" ? fmt(total) + "+" : fmt(total));
+      val.textContent = (state.size === "XL" ? fmt(total) + "+" : fmt(total));
     }
   }
 
@@ -562,7 +583,7 @@
   });
 
   function buildOrder(){
-    var sizeName = {S:"Small", M:"Medium", L:"Large"}[state.size];
+    var sizeName = SIZES[state.size];
     var link = $("link").value.trim();
     var what = $("what").value.trim();
     var color = $("color").value;
@@ -573,17 +594,17 @@
     var name = $("name").value.trim();
     var contact = $("contact").value.trim();
 
-    var customReason = [];
-    if(state.multi) customReason.push("multicolor");
-    if(state.exotic) customReason.push("material");
+    var customReason = customReasons().map(function(s){ return s.toLowerCase(); });
     var isCustom = customReason.length > 0;
+    var br = bulkRate(state.qty);
+    var bulkText = (br && !isBigBatch()) ? (Math.round(br*100) + "% off (" + state.qty + " prints)") : "";
 
     var priceText;
     if(isCustom){ priceText = "Custom quote (" + customReason.join(" + ") + ")"; }
-    else { var t = computeTotal(); priceText = state.size === "L" ? fmt(t) + "+ (est.)" : fmt(t); }
+    else { var t = computeTotal(); priceText = state.size === "XL" ? fmt(t) + "+ (starting)" : fmt(t); }
 
     var amt = !isCustom ? Math.round(computeTotal()) : null;
-    var payText = amt ? ("$" + amt + (state.size === "L" ? " (starting price)" : "") + " upfront via Cash App $" + CASHTAG + " or Venmo @" + VENMO)
+    var payText = amt ? ("$" + amt + (state.size === "XL" ? " (starting price)" : "") + " upfront via Cash App $" + CASHTAG + " or Venmo @" + VENMO)
                       : ("quote request, pay after price is sent (Cash App $" + CASHTAG + " or Venmo @" + VENMO + ")");
     var deliveryText = state.del==="ship" ? "Ship (+$8)" : "Local pickup";
 
@@ -595,6 +616,7 @@
       "Material: " + materialLabel,
       "Color: " + (state.multi ? "Multiple colors (custom quote)" : color),
       "Qty: " + state.qty,
+      bulkText ? "Bulk discount: " + bulkText : null,
       state.rush ? "Rush: yes (+25%)" : null,
       "Delivery: " + deliveryText,
       needby ? "Needed by: " + needby : null,
@@ -607,12 +629,12 @@
     return {
       sizeName:sizeName, link:link, what:what, color:color, materialLabel:materialLabel,
       needby:needby, name:name, contact:contact, isCustom:isCustom, priceText:priceText,
-      amt:amt, payText:payText, deliveryText:deliveryText, summary:summary,
+      amt:amt, payText:payText, deliveryText:deliveryText, summary:summary, bulkText:bulkText,
       fields:{
         "form-name":"order", "bot-field":"",
         name:name, contact:contact, link:link, what:what, size:sizeName,
         material:materialLabel, color:(state.multi ? "Multiple colors" : color),
-        multicolor: state.multi ? "yes" : "no", qty:String(state.qty),
+        multicolor: state.multi ? "yes" : "no", qty:String(state.qty) + (bulkText ? " (bulk " + bulkText + ")" : (isBigBatch() ? " (big batch, custom quote)" : "")),
         rush: state.rush ? "yes" : "no", delivery:deliveryText, needby:needby,
         quote:priceText, pay:payText, summary:summary
       }
@@ -652,10 +674,11 @@
     function row(k,v,mono){ if(!v) return; rows += '<div class="line"><dt>'+k+'</dt><dd class="'+(mono?"mono":"")+'">'+v+'</dd></div>'; }
     row("Model", '<a href="'+esc(o.link)+'" target="_blank" rel="noopener">View link &nearr;</a>');
     row("What", esc(o.what));
-    row("Size", o.sizeName + (o.sizeName==="Large" ? " (confirming)" : ""));
+    row("Size", o.sizeName + (o.sizeName==="XL" ? " (starting price)" : ""));
     row("Material", esc(o.materialLabel));
     row("Color", state.multi ? "Multiple colors" : esc(o.color));
-    row("Quantity", String(state.qty), true);
+    row("Quantity", String(state.qty) + (isBigBatch() ? " (big batch)" : ""), true);
+    if(o.bulkText) row("Bulk discount", esc(o.bulkText));
     if(state.rush) row("Speed", "Rush (+25%)");
     row("Delivery", o.deliveryText);
     if(o.needby) row("Needed by", esc(o.needby), true);
@@ -666,8 +689,8 @@
     if(o.amt){
       payHtml = '<div class="pay">' +
         '<h3>Pay $' + o.amt + ' to start your order</h3>' +
-        '<p>' + (o.sizeName==="Large"
-              ? 'That\'s the starting price for a Large. Amount\'s pre-filled. If the model runs bigger than that tier, I\'ll tell you the difference before printing.'
+        '<p>' + (o.sizeName==="XL"
+              ? 'That\'s the starting price for an XL. Amount\'s pre-filled. If the model runs bigger than that, I\'ll tell you the difference before printing.'
               : 'Amount\'s pre-filled. Tap one, hit send, and you\'re in the print queue.') + '</p>' +
         '<div class="paybtns">' +
         '<a class="paybtn cash" href="' + cashUrl + '" target="_blank" rel="noopener">Cash App</a>' +
@@ -676,14 +699,14 @@
     } else {
       payHtml = '<div class="pay">' +
         '<h3>Quote request received</h3>' +
-        '<p>This isn\'t an order yet. I\'ll look at the model and send you the exact price with a pay link. Once that\'s paid, you\'re in the queue.</p>' +
+        '<p>This isn\'t an order yet. ' + (isBigBatch() ? 'Big batches get real bulk pricing, so I\'ll work up a number for ' + state.qty + ' of these and reach out.' : 'I\'ll look at the model and send you the exact price with a pay link.') + ' Once that\'s paid, you\'re in the queue.</p>' +
         '<p class="alt">Payment is Cash App or Venmo, always before printing.</p></div>';
     }
 
     var headTitle = sent ? (o.isCustom ? "Quote request sent" : "Order sent") : "Order ready";
     var headSub = sent ? (o.isCustom ? "I'll get you a price shortly." : "Pay below and you're in the queue.") : "Review it below";
     var headSmall = o.isCustom ? "Exact price coming from me, then you pay to start"
-                   : (o.sizeName==="Large" ? "Starting price. I confirm before printing." : "Single-color PLA+ / PETG. Pay to lock it in.");
+                   : (o.sizeName==="XL" ? "Starting price. I confirm before printing." : "Single-color PLA+ / PETG. Pay to lock it in.");
     var mailto = "mailto:orders@alamo3dprinting.com?subject=" + encodeURIComponent("Print order from " + (o.name || "customer")) + "&body=" + encodeURIComponent(o.summary);
     var warn = sent ? "" :
       '<div class="warnbox"><strong>Heads up:</strong> the order didn\'t send automatically (bad signal, maybe). Tap the button below to email it to me instead, so it doesn\'t get lost.' +
