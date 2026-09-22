@@ -404,6 +404,38 @@
       <div class="body"><strong>No. Nothing is charged automatically.</strong> Sending shows you the price and Cash App / Venmo buttons with the amount pre-filled. You pay there, and that's what starts your order. <strong>Everything is paid upfront, no exceptions</strong>, and it's Cash App or Venmo only (no cash at pickup). Multicolor and exotic-material requests get a price from me first, then you pay to start.</div>
     </details>
     <details>
+      <summary>How long does it take? <span class="plus">+</span></summary>
+      <div class="body">Most standard prints are ready in <strong>3 to 5 days</strong> after payment. Rush orders jump the queue and are usually done in 1 to 2 days. Big or multi-part prints take longer, and I'll tell you when I confirm. You get a message the moment it's off the printer.</div>
+    </details>
+    <details>
+      <summary>How does pickup work? <span class="plus">+</span></summary>
+      <div class="body">Pickup is <strong>free in San Antonio</strong>. When your print's done I'll message you to set a time and a public meetup spot on the north side. Quick handoff, no awkward hangout required.</div>
+    </details>
+    <details>
+      <summary>How does shipping work? <span class="plus">+</span></summary>
+      <div class="body"><strong>$8 flat</strong> anywhere in the US, USPS with tracking sent to you. Prints get wrapped so they survive the trip. Bigger or fragile stuff might need a custom shipping quote, and I'll tell you before charging anything extra.</div>
+    </details>
+    <details>
+      <summary>Can I send my own file instead of a link? <span class="plus">+</span></summary>
+      <div class="body">Yep. Type <strong>"my own file"</strong> in the model link box, send the order, then email the STL or 3MF to <strong>orders@alamo3dprinting.com</strong> with your name. Same prices apply as long as it's a normal single-color print.</div>
+    </details>
+    <details>
+      <summary>How big is Small / Medium / Large, actually? <span class="plus">+</span></summary>
+      <div class="body">Rough guide: <strong>Small</strong> is under about 3 inches (keychains, minis, small figures). <strong>Medium</strong> is 3 to 6 inches (most figurines, desk stuff). <strong>Large</strong> is 6 to 8+ inches (masks, helmets, props). If you're between two, pick the smaller one and I'll tell you if it needs to be bumped.</div>
+    </details>
+    <details>
+      <summary>What does the finished print look like? <span class="plus">+</span></summary>
+      <div class="body">Standard 0.2mm layers, supports removed and cleaned up. You'll see fine layer lines up close, that's normal for 3D printing. Not sanded, primed, or painted unless we've talked about it (that's extra and takes longer). Want it paint-ready? Order it in white or gray.</div>
+    </details>
+    <details>
+      <summary>What if the print fails or comes out bad? <span class="plus">+</span></summary>
+      <div class="body">If it fails on my end, <strong>I reprint it free</strong>. If the model itself is broken or unprintable, I'll tell you before wasting your money and refund the order. Once you've picked it up and it looks right, it's yours.</div>
+    </details>
+    <details>
+      <summary>Need a bunch of the same thing? <span class="plus">+</span></summary>
+      <div class="body">Set the quantity and you'll see the total. For <strong>10 or more</strong> of the same print, send it through and mention "bulk" in the What is it box, I'll knock the price down.</div>
+    </details>
+    <details>
       <summary>What if the model is bigger than the size I picked? <span class="plus">+</span></summary>
       <div class="body">For <strong>figures, props, and decor</strong> you're buying a size: pick Small and I scale the model down to palm-size. <strong>Functional parts</strong> (stands, brackets, replacement pieces) have to print at their real size or they won't work, so if that lands in a bigger tier than you picked, I'll message you with the right price before printing.</div>
     </details>
@@ -587,17 +619,28 @@
     };
   }
 
-  function sendOrder(order){
-    if(location.protocol === "file:") return Promise.resolve(false);
-    var body = new URLSearchParams(order.fields).toString();
+  function postOnce(body, ms){
     var ctrl = ("AbortController" in window) ? new AbortController() : null;
-    var timer = ctrl ? setTimeout(function(){ ctrl.abort(); }, 12000) : null;
+    var timer = ctrl ? setTimeout(function(){ ctrl.abort(); }, ms) : null;
     return fetch("/", {
       method:"POST",
       headers:{ "Content-Type":"application/x-www-form-urlencoded" },
       body:body,
+      cache:"no-store",
       signal: ctrl ? ctrl.signal : undefined
     }).then(function(r){ if(timer) clearTimeout(timer); return r.ok; }, function(){ if(timer) clearTimeout(timer); return false; });
+  }
+  function sendOrder(order){
+    if(location.protocol === "file:") return Promise.resolve(false);
+    var body = new URLSearchParams(order.fields).toString();
+    // Try up to 3 times with growing patience, so a deploy swap or slow response never loses an order.
+    return postOnce(body, 20000).then(function(ok){
+      if(ok) return true;
+      return new Promise(function(res){ setTimeout(res, 1500); }).then(function(){ return postOnce(body, 25000); });
+    }).then(function(ok){
+      if(ok) return true;
+      return new Promise(function(res){ setTimeout(res, 3000); }).then(function(){ return postOnce(body, 30000); });
+    });
   }
 
   function showTicket(o, sent){
@@ -641,8 +684,10 @@
     var headSub = sent ? (o.isCustom ? "I'll get you a price shortly." : "Pay below and you're in the queue.") : "Review it below";
     var headSmall = o.isCustom ? "Exact price coming from me, then you pay to start"
                    : (o.sizeName==="Large" ? "Starting price. I confirm before printing." : "Single-color PLA+ / PETG. Pay to lock it in.");
+    var mailto = "mailto:orders@alamo3dprinting.com?subject=" + encodeURIComponent("Print order from " + (o.name || "customer")) + "&body=" + encodeURIComponent(o.summary);
     var warn = sent ? "" :
-      '<div class="warnbox"><strong>Heads up:</strong> the order didn\'t send automatically (bad signal, maybe). Tap <strong>Copy order details</strong> and message it to me on Facebook so it doesn\'t get lost.</div>';
+      '<div class="warnbox"><strong>Heads up:</strong> the order didn\'t send automatically (bad signal, maybe). Tap the button below to email it to me instead, so it doesn\'t get lost.' +
+      '<a class="paybtn cash" style="display:flex;margin-top:10px;background:var(--accent);color:var(--accent-ink)" href="' + mailto + '">Email this order to Alamo 3D</a></div>';
 
     var app = $("app");
     app.innerHTML =
