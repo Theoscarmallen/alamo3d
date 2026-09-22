@@ -57,6 +57,11 @@
   .brand .sub{font-size:12px; color:var(--muted); margin-top:1px; font-weight:500;}
   .lede{margin:16px 0 0; font-size:15.5px; color:var(--ink);}
   .lede strong{font-weight:600;}
+  .altlink{display:block; margin-top:12px; font-size:13.5px; color:var(--muted); text-decoration:none; background:var(--surface); border:1px dashed var(--line); border-radius:12px; padding:11px 13px;}
+  .altlink strong{color:var(--accent); font-weight:700;}
+  .altlink:hover{border-color:var(--accent);}
+  .idpill{display:inline-block; font-family:var(--font-mono); font-weight:600; font-size:13px; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.35); border-radius:8px; padding:3px 8px; margin-top:8px; letter-spacing:.02em;}
+  .idcopy{font-family:var(--font-mono); font-weight:600; background:var(--surface-2); border:1px solid var(--line); border-radius:6px; padding:1px 6px;}
 
   .card{
     background:var(--surface); border:1px solid var(--line);
@@ -222,6 +227,7 @@
 <!-- Netlify form detection (hidden). Field names must match what the script posts. -->
 <form name="order" netlify netlify-honeypot="bot-field" hidden>
   <input type="text" name="bot-field">
+  <input type="text" name="orderid">
   <input type="text" name="name">
   <input type="text" name="contact">
   <input type="text" name="link">
@@ -255,6 +261,7 @@
       </div>
     </div>
     <p class="lede">Send me the model, get your price. <strong>Every quote needs a link to the model</strong> (a Printables, MakerWorld, or Thingiverse page). No link, no quote, so grab one first.</p>
+    <a class="altlink" href="/custom.html">Got a photo, a name, or an idea instead of a model? <strong>Photo &amp; custom prints &rarr;</strong></a>
   </header>
 
   <form id="quoteForm" novalidate>
@@ -375,7 +382,7 @@
         <div>
           <p class="hint">Pickup or shipping?</p>
           <div class="seg" id="delivery">
-            <button type="button" data-del="pickup" data-fee="0" aria-pressed="true">Local pickup<span class="s">San Antonio &middot; free</span></button>
+            <button type="button" data-del="pickup" data-fee="0" aria-pressed="true">Local pickup<span class="s">North central San Antonio &middot; free</span></button>
             <button type="button" data-del="ship" data-fee="8" aria-pressed="false">Ship it<span class="s">+$8 flat</span></button>
           </div>
         </div>
@@ -430,7 +437,7 @@
     </details>
     <details>
       <summary>Do you do custom design work? <span class="plus">+</span></summary>
-      <div class="body">Mostly I print existing models you find and link. If you've got your own file or a true custom idea, send it over anyway, I'll take a look, but custom design runs higher and takes longer.</div>
+      <div class="body">Mostly I print existing models you find and link. But if you've got a <strong>photo, a name, or an idea</strong> instead of a model, check the <a href="/custom.html" style="color:var(--accent);font-weight:600;text-decoration:none">Photo &amp; custom prints</a> page: flat prices for photo-to-figure, lithophanes, name signs, keychains, cake toppers and more. True from-scratch design work runs higher and takes longer.</div>
     </details>
     <details>
       <summary>How's the price figured? <span class="plus">+</span></summary>
@@ -441,12 +448,16 @@
       <div class="body"><strong>No. Nothing is charged automatically.</strong> Sending shows you the price and Cash App / Venmo buttons with the amount pre-filled. You pay there, and that's what starts your order. <strong>Everything is paid upfront, no exceptions</strong>, and it's Cash App or Venmo only (no cash at pickup). Multicolor and exotic-material requests get a price from me first, then you pay to start.</div>
     </details>
     <details>
+      <summary>How do you know my payment is for my order? <span class="plus">+</span></summary>
+      <div class="body">Every order gets a short <strong>order ID</strong> like <span class="idcopy">A3D-7K2Q</span>. It's on your confirmation, and the Venmo button fills it into the payment note for you. On Cash App, type it in the "For" box before you hit pay. That ID is how I match your money to your print, so don't skip it. If you forget, message me the ID and I'll sort it out.</div>
+    </details>
+    <details>
       <summary>How long does it take? <span class="plus">+</span></summary>
       <div class="body">Most standard prints are ready in <strong>3 to 5 days</strong> after payment. Rush orders jump the queue and are usually done in 1 to 2 days. Big or multi-part prints take longer, and I'll tell you when I confirm. You get a message the moment it's off the printer.</div>
     </details>
     <details>
       <summary>How does pickup work? <span class="plus">+</span></summary>
-      <div class="body">Pickup is <strong>free in San Antonio</strong>. When your print's done I'll message you to set a time and a public meetup spot on the north side. Quick handoff, no awkward hangout required.</div>
+      <div class="body">Pickup is <strong>free</strong>. I'm in <strong>north central San Antonio</strong>. When your print's done I'll message you to set a time and a public meetup spot nearby. Quick handoff, no awkward hangout required.</div>
     </details>
     <details>
       <summary>How does shipping work? <span class="plus">+</span></summary>
@@ -454,7 +465,7 @@
     </details>
     <details>
       <summary>Can I send my own file instead of a link? <span class="plus">+</span></summary>
-      <div class="body">Yep. Type <strong>"my own file"</strong> in the model link box, send the order, then email the STL or 3MF to <strong>orders@alamo3dprinting.com</strong> with your name. Same prices apply as long as it's a normal single-color print.</div>
+      <div class="body">Yep. Type <strong>"my own file"</strong> in the model link box, send the order, then email the STL or 3MF to <strong>orders@alamo3dprinting.com</strong> with your order ID in the subject. Same prices apply as long as it's a normal single-color print.</div>
     </details>
     <details>
       <summary>How big is Small / Medium / Large / XL, actually? <span class="plus">+</span></summary>
@@ -618,7 +629,8 @@
   $("quoteForm").addEventListener("submit", function(e){
     e.preventDefault();
     var link = $("link"), name = $("name"), contact = $("contact");
-    var linkBad = !link.value.trim();
+    var lv = link.value.trim();
+    var linkBad = !lv || !(/^https?:\/\/\S+\.\S+/i.test(lv) || /^\S+\.\S+\//i.test(lv) || /my own file/i.test(lv));
     var nameBad = !name.value.trim();
     var contactBad = !contact.value.trim();
     markInvalid(link, linkBad); markInvalid(name, nameBad); markInvalid(contact, contactBad);
@@ -635,7 +647,16 @@
     sendOrder(order).then(function(ok){ showTicket(order, ok); }, function(){ showTicket(order, false); });
   });
 
+  function makeOrderId(){
+    var chars = "ABCDEFGHJKMNPQRSTUVWXYZ23456789", out = "";
+    var arr = new Uint32Array(4);
+    if(window.crypto && crypto.getRandomValues){ crypto.getRandomValues(arr); } else { for(var j=0;j<4;j++) arr[j] = Math.floor(Math.random()*1e9); }
+    for(var i=0;i<4;i++) out += chars[arr[i] % chars.length];
+    return "A3D-" + out;
+  }
+
   function buildOrder(){
+    var orderId = makeOrderId();
     var sizeName = SIZES[state.size];
     var link = $("link").value.trim();
     var what = $("what").value.trim();
@@ -663,7 +684,8 @@
     var deliveryText = state.del==="ship" ? "Ship (+$8)" : "Local pickup";
 
     var summary = [
-      "NEW PRINT ORDER",
+      "NEW PRINT ORDER " + orderId,
+      "Order ID: " + orderId,
       "Model: " + link,
       what ? "What: " + what : null,
       "Size: " + sizeName,
@@ -685,11 +707,12 @@
     ].filter(Boolean).join("\n");
 
     return {
+      orderId:orderId,
       sizeName:sizeName, link:link, what:what, color:color, materialLabel:materialLabel,
       needby:needby, notes:notes, name:name, contact:contact, isCustom:isCustom, priceText:priceText,
       amt:amt, payText:payText, deliveryText:deliveryText, summary:summary, bulkText:bulkText,
       fields:{
-        "form-name":"order", "bot-field":"",
+        "form-name":"order", "bot-field":"", orderid:orderId,
         name:name, contact:contact, link:link, what:what, size:sizeName,
         material:materialLabel, color:(state.multi ? "Multiple colors" : color),
         multicolor: state.multi ? "yes" : "no",
@@ -727,12 +750,13 @@
   }
 
   function showTicket(o, sent){
-    var payNote = encodeURIComponent("3D print order" + (o.name ? " - " + o.name : ""));
+    var payNote = encodeURIComponent(o.orderId + " 3D print" + (o.name ? " - " + o.name : ""));
     var cashUrl = "https://cash.app/$" + CASHTAG + (o.amt ? "/" + o.amt : "");
     var venmoUrl = "https://venmo.com/" + VENMO + "?txn=pay" + (o.amt ? "&amount=" + o.amt : "") + "&note=" + payNote;
 
     var rows = "";
     function row(k,v,mono){ if(!v) return; rows += '<div class="line"><dt>'+k+'</dt><dd class="'+(mono?"mono":"")+'">'+v+'</dd></div>'; }
+    row("Order ID", esc(o.orderId), true);
     row("Model", '<a href="'+esc(o.link)+'" target="_blank" rel="noopener">View link &nearr;</a>');
     row("What", esc(o.what));
     row("Size", o.sizeName + (o.sizeName==="XL" ? " (starting price)" : ""));
@@ -760,7 +784,8 @@
         '<div class="paybtns">' +
         '<a class="paybtn cash" href="' + cashUrl + '" target="_blank" rel="noopener">Cash App</a>' +
         '<a class="paybtn venmo" href="' + venmoUrl + '" target="_blank" rel="noopener">Venmo</a>' +
-        '</div><p class="alt">Orders don\'t start until payment lands. Cash App or Venmo only.</p></div>';
+        '</div><p class="alt"><strong style="color:var(--ink)">Put <span class="idcopy">' + esc(o.orderId) + '</span> in the payment note.</strong> Venmo fills it in for you; on Cash App type it in the "For" box. That\'s how I match your payment to this order.</p>' +
+        '<p class="alt">Orders don\'t start until payment lands. Cash App or Venmo only.</p></div>';
     } else {
       payHtml = '<div class="pay">' +
         '<h3>Quote request received</h3>' +
@@ -772,7 +797,7 @@
     var headSub = sent ? (o.isCustom ? "I'll get you a price shortly." : "Pay below and you're in the queue.") : "Review it below";
     var headSmall = o.isCustom ? "Exact price coming from me, then you pay to start"
                    : (o.sizeName==="XL" ? "Starting price. I confirm before printing." : "Single-color PLA+ / PETG. Pay to lock it in.");
-    var mailto = "mailto:orders@alamo3dprinting.com?subject=" + encodeURIComponent("Print order from " + (o.name || "customer")) + "&body=" + encodeURIComponent(o.summary);
+    var mailto = "mailto:orders@alamo3dprinting.com?subject=" + encodeURIComponent("Print order " + o.orderId + " from " + (o.name || "customer")) + "&body=" + encodeURIComponent(o.summary);
     var warn = sent ? "" :
       '<div class="warnbox"><strong>Heads up:</strong> the order didn\'t send automatically (bad signal, maybe). Tap the button below to email it to me instead, so it doesn\'t get lost.' +
       '<a class="paybtn cash" style="display:flex;margin-top:10px;background:var(--accent);color:var(--accent-ink)" href="' + mailto + '">Email this order to Alamo 3D</a></div>';
@@ -784,7 +809,8 @@
       '<div><h1>'+headTitle+'</h1><div class="sub">'+headSub+'</div></div></div></header>'+
       '<div class="ticket"><div class="head"><div class="small">' + (o.isCustom ? "Quote" : "Your quote") + '</div>'+
       '<div class="big">'+o.priceText+'</div>'+
-      '<div class="small">'+headSmall+'</div></div>'+
+      '<div class="small">'+headSmall+'</div>'+
+      '<div class="idpill">Order ID ' + esc(o.orderId) + '</div></div>'+
       '<dl>'+rows+'</dl></div>'+
       payHtml + warn +
       '<button class="ghost" id="copyBtn">Copy order details</button>'+

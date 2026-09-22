@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Alamo 3D photo and custom prints: photo to 3D figure, lithophanes, name signs, keychains, cake pop cutters and more. Flat prices, San Antonio pickup or shipping.">
+<title>Alamo 3D · Photo &amp; custom prints</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23F1560B'/%3E%3Cpath d='M18 14h28l-3 14H21z' fill='none' stroke='%23fff' stroke-width='5' stroke-linejoin='round'/%3E%3Cpath d='M32 28v14' stroke='%23fff' stroke-width='5' stroke-linecap='round'/%3E%3Crect x='24' y='42' width='16' height='12' rx='2' fill='none' stroke='%23fff' stroke-width='5'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --bg:#EAEEF2; --surface:#FFFFFF; --surface-2:#F4F6F9;
+    --ink:#14181D; --muted:#5A6472; --line:#D6DCE3; --line-2:#E5EAF0;
+    --accent:#F1560B; --accent-ink:#FFFFFF; --accent-soft:#FDE7D7;
+    --good:#1F9D57; --warn:#B8790A; --warn-soft:#F8ECC9; --crit:#D23B3B;
+    --shadow:0 1px 2px rgba(20,24,29,.06), 0 8px 24px rgba(20,24,29,.06);
+    --font-display:"Archivo","Arial Black",system-ui,sans-serif;
+    --font-body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+    --font-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",monospace;
+    padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#0E1218; --surface:#191F27; --surface-2:#141a21;
+      --ink:#EDF1F6; --muted:#93A0B0; --line:#2A333F; --line-2:#232b34;
+      --accent:#FF6A1F; --accent-ink:#160b03; --accent-soft:#2c1a0d;
+      --good:#3FC178; --warn:#E4B24a; --warn-soft:#2a2410; --crit:#F0685F;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px rgba(0,0,0,.35);
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:var(--font-body); font-size:15px; line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  [hidden]{display:none!important}
+  img{max-width:100%}
+  .wrap{max-width:560px; margin:0 auto; padding-inline:16px; padding-block:0 132px;}
+
+  header.top{padding-block:26px 14px;}
+  .brand{display:flex; align-items:center; gap:11px;}
+  .mark{
+    width:40px; height:40px; border-radius:11px; flex:none;
+    background:var(--accent); color:var(--accent-ink);
+    display:grid; place-items:center; box-shadow:var(--shadow);
+  }
+  .mark svg{width:22px; height:22px; display:block;}
+  .brand h1{
+    font-family:var(--font-display); font-weight:800; font-size:19px;
+    letter-spacing:-.01em; margin:0; line-height:1.1;
+  }
+  .brand .sub{font-size:12px; color:var(--muted); margin-top:1px; font-weight:500;}
+  .lede{margin:16px 0 0; font-size:15.5px; color:var(--ink);}
+  .lede strong{font-weight:600;}
+  .altlink{display:block; margin-top:12px; font-size:13.5px; color:var(--muted); text-decoration:none; background:var(--surface); border:1px dashed var(--line); border-radius:12px; padding:11px 13px;}
+  .altlink strong{color:var(--accent); font-weight:700;}
+  .altlink:hover{border-color:var(--accent);}
+  .idpill{display:inline-block; font-family:var(--font-mono); font-weight:600; font-size:13px; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.35); border-radius:8px; padding:3px 8px; margin-top:8px; letter-spacing:.02em;}
+  .idcopy{font-family:var(--font-mono); font-weight:600; background:var(--surface-2); border:1px solid var(--line); border-radius:6px; padding:1px 6px;}
+
+  .card{
+    background:var(--surface); border:1px solid var(--line);
+    border-radius:16px; padding:18px; margin-top:14px; box-shadow:var(--shadow);
+  }
+  .step{display:flex; align-items:baseline; gap:9px; margin:0 0 13px;}
+  .step .n{
+    font-family:var(--font-mono); font-weight:600; font-size:11px;
+    color:var(--accent); background:var(--accent-soft);
+    width:22px; height:22px; border-radius:6px; display:grid; place-items:center;
+    flex:none; align-self:center;
+  }
+  .step h2{font-family:var(--font-display); font-weight:700; font-size:15.5px; margin:0; letter-spacing:-.005em;}
+  .step .req{font-size:11px; color:var(--crit); font-weight:600; margin-left:auto; align-self:center;}
+  .step .opt{font-size:11px; color:var(--muted); font-weight:500; margin-left:auto; align-self:center;}
+
+  label.fld{display:block;}
+  .hint{font-size:12.5px; color:var(--muted); margin:0 0 9px;}
+  .hint a{color:var(--accent); font-weight:600; text-decoration:none;}
+  .hint a:hover{text-decoration:underline;}
+
+  input[type=url],input[type=text],input[type=email],input[type=date],select,textarea{
+    width:100%; font-family:var(--font-body); font-size:15px; color:var(--ink);
+    background:var(--surface-2); border:1.5px solid var(--line);
+    border-radius:10px; padding:11px 12px; -webkit-appearance:none; appearance:none;
+  }
+  textarea{resize:vertical; min-height:44px;}
+  input:focus,select:focus,textarea:focus,button:focus-visible,.tile:focus-visible,.switch:focus-visible{outline:none;}
+  input:focus,select:focus,textarea:focus{border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft);}
+  button:focus-visible,.tile:focus-visible,.switch:focus-visible,.paybtn:focus-visible{box-shadow:0 0 0 3px var(--accent-soft); border-color:var(--accent);}
+  select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235A6472' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 13px center; padding-right:34px;}
+  .invalid{border-color:var(--crit)!important; box-shadow:0 0 0 3px rgba(210,59,59,.14)!important;}
+
+  .tiles{display:grid; grid-template-columns:1fr 1fr; gap:8px;}
+  .tile{
+    text-align:left; cursor:pointer; background:var(--surface-2); color:var(--ink);
+    border:1.5px solid var(--line); border-radius:12px; padding:12px 11px 13px;
+    display:flex; flex-direction:column; gap:3px; transition:border-color .12s, background .12s;
+    font-family:var(--font-body);
+  }
+  .tile .sz{font-family:var(--font-display); font-weight:700; font-size:14px;}
+  .tile .px{font-family:var(--font-mono); font-weight:600; font-size:17px; color:var(--accent);}
+  .tile .ex{font-size:11px; color:var(--muted); line-height:1.35;}
+  .tile[aria-pressed=true]{border-color:var(--accent); background:var(--accent-soft);}
+  .tile[aria-pressed=true] .ex{color:var(--ink);}
+  @media (max-width:340px){
+    .tiles{grid-template-columns:1fr;}
+  }
+
+  .stack{display:flex; flex-direction:column; gap:14px;}
+
+  .switch{
+    display:flex; align-items:center; gap:12px; cursor:pointer;
+    background:var(--surface-2); border:1.5px solid var(--line);
+    border-radius:12px; padding:12px 13px;
+  }
+  .switch .track{width:42px; height:25px; border-radius:20px; background:var(--line); flex:none; position:relative; transition:background .15s;}
+  .switch .track::after{
+    content:""; position:absolute; top:2.5px; left:2.5px; width:20px; height:20px;
+    border-radius:50%; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,.3); transition:left .15s;
+  }
+  .switch[aria-pressed=true] .track{background:var(--accent);}
+  .switch[aria-pressed=true] .track::after{left:19.5px;}
+  .switch .txt b{font-weight:600; font-size:14px;}
+  .switch .txt span{display:block; font-size:12px; color:var(--muted);}
+
+  .note{
+    font-size:12.5px; border-radius:10px; padding:10px 12px; margin-top:10px;
+    background:var(--warn-soft); color:var(--ink); border:1px solid var(--line);
+    display:flex; gap:8px; align-items:flex-start;
+  }
+  .note svg{flex:none; margin-top:1px;}
+
+  .qty{display:flex; align-items:center; gap:0; width:132px;}
+  .qty button{
+    width:38px; height:44px; font-size:20px; font-family:var(--font-mono);
+    background:var(--surface-2); border:1.5px solid var(--line); color:var(--ink); cursor:pointer;
+  }
+  .qty button:first-child{border-radius:10px 0 0 10px;}
+  .qty button:last-child{border-radius:0 10px 10px 0;}
+  .qty input{width:56px; text-align:center; border-radius:0; border-left:none; border-right:none; font-family:var(--font-mono); font-weight:600; padding:11px 0;}
+  .seg{display:grid; grid-template-columns:1fr 1fr; gap:8px;}
+  .seg button{
+    font-family:var(--font-body); font-size:14px; font-weight:600; cursor:pointer;
+    background:var(--surface-2); border:1.5px solid var(--line); color:var(--ink);
+    border-radius:10px; padding:12px 8px; display:flex; flex-direction:column; gap:2px; align-items:center;
+  }
+  .seg button .s{font-size:11px; font-weight:500; color:var(--muted);}
+  .seg button[aria-pressed=true]{border-color:var(--accent); background:var(--accent-soft);}
+
+  .pricebar{
+    position:fixed; left:0; right:0; bottom:0; z-index:20;
+    background:var(--surface); border-top:1px solid var(--line);
+    padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));
+    box-shadow:0 -6px 24px rgba(20,24,29,.10);
+  }
+  .pricebar .inner{max-width:560px; margin:0 auto; display:flex; align-items:center; gap:12px;}
+  .price{display:flex; flex-direction:column; line-height:1.05; min-width:0;}
+  .price .lbl{font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); font-weight:600;}
+  .price .val{font-family:var(--font-mono); font-weight:600; font-size:26px; letter-spacing:-.02em; white-space:nowrap;}
+  .price .val.custom{font-size:19px; color:var(--warn);}
+  .price .meta{font-size:11px; color:var(--muted); margin-top:1px;}
+  .cta{
+    margin-left:auto; flex:none; font-family:var(--font-display); font-weight:700; font-size:15.5px;
+    background:var(--accent); color:var(--accent-ink); border:none; border-radius:12px;
+    padding:13px 20px; cursor:pointer; box-shadow:var(--shadow); transition:transform .08s, filter .12s;
+  }
+  .cta:hover{filter:brightness(1.05);} .cta:active{transform:translateY(1px);}
+  .cta:disabled{opacity:.6; cursor:progress;}
+  .submitblock{margin-top:16px;}
+  .bigcta{
+    width:100%; font-family:var(--font-display); font-weight:800; font-size:17px;
+    background:var(--accent); color:var(--accent-ink); border:none; border-radius:14px;
+    padding:17px 20px; cursor:pointer; box-shadow:var(--shadow); transition:transform .08s, filter .12s;
+  }
+  .bigcta:hover{filter:brightness(1.05);} .bigcta:active{transform:translateY(1px);}
+  .bigcta:disabled{opacity:.6; cursor:progress;}
+  .submitnote{font-size:12.5px; color:var(--muted); text-align:center; margin:10px 6px 0; line-height:1.5;}
+  .submitnote strong{color:var(--ink); font-weight:600;}
+
+  .faq h3{font-family:var(--font-display); font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin:26px 4px 6px;}
+  details{background:var(--surface); border:1px solid var(--line); border-radius:12px; margin-top:8px; overflow:hidden;}
+  summary{list-style:none; cursor:pointer; padding:14px 16px; font-weight:600; font-size:14.5px; display:flex; align-items:center; gap:10px;}
+  summary::-webkit-details-marker{display:none;}
+  summary .plus{margin-left:auto; color:var(--accent); font-family:var(--font-mono); font-size:18px; transition:transform .15s;}
+  details[open] summary .plus{transform:rotate(45deg);}
+  details .body{padding:0 16px 15px; font-size:13.5px; color:var(--muted); line-height:1.55;}
+  details .body strong{color:var(--ink); font-weight:600;}
+
+  .ticket{background:var(--surface); border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow); overflow:hidden;}
+  .ticket .head{background:var(--accent); color:var(--accent-ink); padding:20px 20px 18px;}
+  .ticket .head .big{font-family:var(--font-display); font-weight:800; font-size:22px; margin:6px 0 2px;}
+  .ticket .head .small{font-size:13px; opacity:.9;}
+  .ticket dl{margin:0; padding:6px 20px 8px;}
+  .ticket .line{display:flex; justify-content:space-between; gap:16px; padding:11px 0; border-bottom:1px solid var(--line-2); font-size:14px;}
+  .ticket .line:last-child{border-bottom:none;}
+  .ticket dt{color:var(--muted);} .ticket dd{margin:0; text-align:right; font-weight:500; word-break:break-word;}
+  .ticket dd.mono{font-family:var(--font-mono);}
+  .ticket dd a{color:var(--accent); text-decoration:none;}
+  .pay{margin-top:12px; background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:16px 18px; box-shadow:var(--shadow);}
+  .pay h3{font-family:var(--font-display); font-size:15.5px; margin:0 0 4px; letter-spacing:-.005em;}
+  .pay p{font-size:13px; color:var(--muted); margin:0 0 12px;}
+  .paybtns{display:grid; grid-template-columns:1fr 1fr; gap:8px;}
+  .paybtn{display:flex; align-items:center; justify-content:center; gap:8px; text-decoration:none; font-family:var(--font-display); font-weight:700; font-size:14.5px; border-radius:11px; padding:13px 10px; transition:filter .12s, transform .08s; border:1.5px solid transparent;}
+  .paybtn:hover{filter:brightness(1.06);} .paybtn:active{transform:translateY(1px);}
+  .paybtn.cash{background:#00D632; color:#062b10;}
+  .paybtn.venmo{background:#008CFF; color:#ffffff;}
+  .pay .alt{font-size:12px; color:var(--muted); margin:10px 0 0; text-align:center;}
+  .warnbox{margin-top:12px; background:var(--warn-soft); border:1px solid var(--line); border-radius:12px; padding:12px 14px; font-size:13px; color:var(--ink);}
+  .ghost{
+    width:100%; margin-top:10px; font-family:var(--font-body); font-weight:600; font-size:14px;
+    background:var(--surface-2); color:var(--ink); border:1.5px solid var(--line); border-radius:11px;
+    padding:12px; cursor:pointer;
+  }
+  .ghost:hover{border-color:var(--accent);}
+  .backlink{display:inline-block; margin-top:14px; font-size:13px; color:var(--muted); background:none; border:none; cursor:pointer; text-decoration:underline; font-family:var(--font-body);}
+  .footnote{font-size:11.5px; color:var(--muted); text-align:center; margin:20px 4px 0; line-height:1.5;}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;}}
+
+  .grp{font-family:var(--font-display); font-size:12px; text-transform:uppercase; letter-spacing:.07em; color:var(--muted); margin:14px 2px 8px;}
+  .grp:first-child{margin-top:0;}
+  .plist{display:flex; flex-direction:column; gap:8px;}
+  .prod{
+    text-align:left; cursor:pointer; background:var(--surface-2); color:var(--ink);
+    border:1.5px solid var(--line); border-radius:12px; padding:12px 12px 12px;
+    display:grid; grid-template-columns:1fr auto; gap:2px 10px; font-family:var(--font-body);
+    transition:border-color .12s, background .12s;
+  }
+  .prod .pn{font-family:var(--font-display); font-weight:700; font-size:14.5px; line-height:1.25;}
+  .prod .pp{font-family:var(--font-mono); font-weight:600; font-size:15px; color:var(--accent); white-space:nowrap; text-align:right;}
+  .prod .pd{grid-column:1 / -1; font-size:12px; color:var(--muted); line-height:1.4;}
+  .prod[aria-pressed=true]{border-color:var(--accent); background:var(--accent-soft);}
+  .prod[aria-pressed=true] .pd{color:var(--ink);}
+  .prod .ai{display:inline-block; font-family:var(--font-mono); font-size:10px; font-weight:600; letter-spacing:.06em; color:var(--accent); border:1px solid var(--accent); border-radius:5px; padding:0 5px; margin-left:4px; vertical-align:middle;}
+  input[type=file]{width:100%; font-family:var(--font-body); font-size:14px; color:var(--ink); background:var(--surface-2); border:1.5px dashed var(--line); border-radius:10px; padding:11px 12px;}
+  input[type=file]::file-selector-button{font-family:var(--font-body); font-weight:600; font-size:13px; background:var(--surface); color:var(--ink); border:1px solid var(--line); border-radius:8px; padding:7px 10px; margin-right:10px; cursor:pointer;}
+  #imagelink{margin-top:8px;}
+</style>
+</head>
+<body>
+
+<!-- Netlify form detection (hidden). Field names must match what the script posts. -->
+<form name="custom" netlify netlify-honeypot="bot-field" enctype="multipart/form-data" hidden>
+  <input type="text" name="bot-field">
+  <input type="text" name="orderid">
+  <input type="text" name="name">
+  <input type="text" name="contact">
+  <input type="text" name="product">
+  <input type="text" name="size">
+  <input type="text" name="text">
+  <input type="text" name="imagelink">
+  <input type="file" name="photo">
+  <input type="text" name="color">
+  <input type="text" name="qty">
+  <input type="text" name="rush">
+  <input type="text" name="delivery">
+  <input type="text" name="needby">
+  <input type="text" name="quote">
+  <input type="text" name="pay">
+  <textarea name="notes"></textarea>
+  <textarea name="summary"></textarea>
+</form>
+
+<div class="wrap" id="app">
+  <header class="top">
+    <div class="brand">
+      <div class="mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-8 8"/></svg>
+      </div>
+      <div>
+        <h1>Alamo 3D &middot; Photo &amp; custom</h1>
+        <div class="sub">No model? No problem. Send a photo or an idea, I build it and print it.</div>
+      </div>
+    </div>
+    <p class="lede">Flat prices for prints made <strong>from your photo, your name, or your drawing</strong>. Pick one below, attach the picture, pay, and I take it from there. Have a model link already? <a href="/" style="color:var(--accent);font-weight:600;text-decoration:none">Use the regular order page &rarr;</a></p>
+  </header>
+
+  <form id="quoteForm" novalidate>
+    <div class="card">
+      <div class="step"><span class="n">1</span><h2>What do you want made?</h2><span class="req">Required</span></div>
+      <p class="hint" style="margin-bottom:12px">Everything here is single-color PLA+ (you pick the color). Items marked <b style="color:var(--ink)">AI</b> are built with an AI model generator from your photo: the likeness is good, not photo-perfect, and <strong style="color:var(--ink)">you approve a preview before it prints</strong>.</p>
+
+      <div id="plistHost"></div>
+    </div>
+
+    <div class="card" id="sizeCard" hidden>
+      <div class="step"><span class="n">2</span><h2>How big?</h2><span class="req">Required</span></div>
+      <div class="tiles" id="sizeTiles"></div>
+    </div>
+
+    <div class="card">
+      <div class="step"><span class="n" id="stepPhotoN">2</span><h2>Your photo &amp; details</h2><span class="req">Required</span></div>
+      <div class="stack">
+        <label class="fld" for="photo" id="photoFld">
+          <p class="hint">Attach the photo or drawing <span style="opacity:.7">(JPG or PNG, under 10MB). One clear, well-lit shot works best. For figures and statues, a front view with a plain background.</span></p>
+          <input type="file" id="photo" name="photo" accept="image/*">
+          <p class="hint" style="margin:8px 0 0">Can't attach? Paste a link to the image instead (Google Photos, iCloud, Dropbox...) or email it to orders@alamo3dprinting.com after you send this.</p>
+          <input type="text" id="imagelink" name="imagelink" placeholder="https://... (optional if you attached a file)" inputmode="url" autocomplete="off">
+        </label>
+        <label class="fld" for="text" id="textFld">
+          <p class="hint" id="textHint">Text on it? <span style="opacity:.7">(name, date, a short line. Leave blank if none.)</span></p>
+          <input type="text" id="text" name="text" placeholder="e.g. MARTINEZ, or Emma 2026" maxlength="80">
+        </label>
+        <label class="fld" for="color">
+          <p class="hint">Color</p>
+          <select id="color" name="color">
+            <option>Your pick (I'll match the photo or go neutral)</option>
+            <option>White</option><option>Black</option><option>Gray</option><option>Red</option><option>Blue</option><option>Green</option><option>Orange</option><option>Yellow</option><option>Pink</option><option>Purple</option><option>Gold</option><option>Silver</option><option>Wood tone</option>
+          </select>
+        </label>
+        <div>
+          <p class="hint">How many?</p>
+          <div class="qty">
+            <button type="button" id="qtyMinus" aria-label="Fewer">&minus;</button>
+            <input type="text" id="qty" name="qty" value="1" inputmode="numeric" aria-label="Quantity">
+            <button type="button" id="qtyPlus" aria-label="More">+</button>
+          </div>
+          <p class="hint" id="bulkNote" style="margin:8px 0 0" hidden></p>
+        </div>
+        <div class="switch" id="rushToggle" role="button" tabindex="0" aria-pressed="false">
+          <span class="track" aria-hidden="true"></span>
+          <span class="txt"><b>Need it fast (rush)</b><span>Bumped to the front of the queue &middot; +25%</span></span>
+        </div>
+        <div>
+          <p class="hint">Pickup or shipping?</p>
+          <div class="seg" id="delivery">
+            <button type="button" data-del="pickup" data-fee="0" aria-pressed="true">Local pickup<span class="s">North central San Antonio &middot; free</span></button>
+            <button type="button" data-del="ship" data-fee="8" aria-pressed="false">Ship it<span class="s">+$8 flat</span></button>
+          </div>
+        </div>
+        <label class="fld" for="needby">
+          <p class="hint">Need it by a certain date? <span style="opacity:.7">(optional)</span></p>
+          <input type="date" id="needby" name="needby">
+        </label>
+        <label class="fld" for="notes">
+          <p class="hint">Anything else I should know? <span style="opacity:.7">(optional)</span></p>
+          <textarea id="notes" name="notes" rows="3" placeholder="e.g. it's my dog Bruno, make the ears big; the sign hangs on a door; gift for Saturday"></textarea>
+        </label>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="step"><span class="n" id="stepContactN">3</span><h2>Where do I reach you?</h2><span class="req">Required</span></div>
+      <div class="stack">
+        <label class="fld" for="name">
+          <p class="hint">Your name</p>
+          <input type="text" id="name" name="name" placeholder="First name" autocomplete="given-name">
+        </label>
+        <label class="fld" for="contact">
+          <p class="hint">Email or phone number</p>
+          <input type="text" id="contact" name="contact" placeholder="you@email.com or (210) 555-0123" autocomplete="email">
+        </label>
+      </div>
+    </div>
+
+    <div class="submitblock">
+      <button class="bigcta" id="submitBtnInline" type="submit">Send my order &rarr;</button>
+      <p class="submitnote">Next you'll see your price and the Cash App / Venmo buttons. <strong>Nothing is charged automatically</strong>, and <strong>nothing prints until it's paid.</strong></p>
+    </div>
+  </form>
+
+  <section class="faq">
+    <h3>Before you ask</h3>
+    <details>
+      <summary>How does "photo to figure" actually work? <span class="plus">+</span></summary>
+      <div class="body">I run your photo through an AI model generator (MakerWorld's Image to 3D and similar tools), clean up the result, and print it in one color. It captures the shape, pose, and vibe well. It won't nail every facial detail like a sculptor would. <strong>I send you a preview render before printing</strong>, and if it's not close enough, you get a refund and we call it a day.</div>
+    </details>
+    <details>
+      <summary>What's a lithophane? <span class="plus">+</span></summary>
+      <div class="body">A thin white panel where the photo is carved into the thickness of the plastic. Looks like a plain white tile until you hold it up to a light or window, then the picture appears in full detail. Best with clear, high-contrast photos. The night-light version sits on a small USB LED base.</div>
+    </details>
+    <details>
+      <summary>Why is the AI stuff more expensive than a sign or a keychain? <span class="plus">+</span></summary>
+      <div class="body">The generator tools cost me credits per model, plus there's cleanup and a preview round with you. Signs, keychains, lithophanes, cutters, and vases are built with free makers, so those are cheaper.</div>
+    </details>
+    <details>
+      <summary>Can I get it in more than one color? <span class="plus">+</span></summary>
+      <div class="body">Single color is the flat price. Two-tone signs and multicolor pieces are doable, they just get a custom quote. Say what you want in the notes and I'll message you a number.</div>
+    </details>
+    <details>
+      <summary>Do I get charged when I hit send? <span class="plus">+</span></summary>
+      <div class="body"><strong>No.</strong> Sending shows you the price and the Cash App / Venmo buttons with the amount pre-filled. You pay there, with your order ID in the note, and that starts it. Everything is paid upfront, Cash App or Venmo only.</div>
+    </details>
+    <details>
+      <summary>How long does it take? <span class="plus">+</span></summary>
+      <div class="body">Photo items need a modeling step first, so figure <strong>4 to 7 days</strong> from payment (rush is 2 to 3). Signs, keychains, cutters, and ornaments are usually <strong>3 to 5 days</strong>. Pickup is in north central San Antonio, or $8 flat shipping anywhere in the US.</div>
+    </details>
+    <details>
+      <summary>Something not on the list? <span class="plus">+</span></summary>
+      <div class="body">Pick the closest thing and explain in the notes, or just email <strong>orders@alamo3dprinting.com</strong> with what you're picturing. If it's printable, I'll quote it.</div>
+    </details>
+  </section>
+
+  <p class="footnote">Single-color PLA+. AI-generated items get a preview before printing. Multicolor quoted separately. San Antonio, TX.</p>
+</div>
+
+<div class="pricebar" id="pricebar">
+  <div class="inner">
+    <div class="price">
+      <span class="lbl" id="priceLbl">Your quote</span>
+      <span class="val" id="priceVal">$0</span>
+      <span class="meta" id="priceMeta">Pick an item above</span>
+    </div>
+    <button class="cta" id="submitBtn" type="submit" form="quoteForm">Send order</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var CASHTAG = "TheOscarMallen", VENMO = "OscarMallen";
+  var $ = function(id){ return document.getElementById(id); };
+
+  // Products. sizes: null = flat price. "from" = starting price, Oscar confirms. ai = uses paid generator credits.
+  var PRODUCTS = [
+    {grp:"From a photo", id:"figure", name:"Photo to 3D figure", ai:true, desc:"One photo of a person, pet, character, car, whatever, becomes a printed figure.", sizes:{S:35, M:60}, sizeNames:{S:"Small, up to 4\"", M:"Medium, up to 6\""}},
+    {grp:"From a photo", id:"statue", name:"Portrait statue / bust", ai:true, desc:"Head-and-shoulders bust from a clear face photo. Great gift, great desk piece.", sizes:{S:55, M:80}, sizeNames:{S:"Small, up to 4\"", M:"Medium, up to 6\""}},
+    {grp:"From a photo", id:"litho", name:"Lithophane panel", desc:"Your photo carved into a white panel. Hold it to the light and the picture appears.", sizes:{S:25, M:35}, sizeNames:{S:"4 x 6\"", M:"5 x 7\""}},
+    {grp:"From a photo", id:"lithonl", name:"Lithophane night light", desc:"Same photo panel, curved and mounted on a USB LED base so it glows on a shelf.", price:45},
+    {grp:"From a photo", id:"relief", name:"Photo relief plaque", desc:"Raised 3D relief of a photo or logo on a flat plaque. Hangs on a wall.", price:30},
+    {grp:"From a photo", id:"keychain", name:"Photo or logo keychain", desc:"Your image, logo, or pet's face as a keychain, tag, or bookmark. Bulk discount at 5+.", price:12},
+    {grp:"From a photo", id:"canvas", name:"Filament painting (Chroma Canvas)", desc:"A photo turned into a layered multi-color filament picture. Starting price, I confirm before printing.", sizes:{S:45, M:65}, sizeNames:{S:"6\" wide", M:"9\" wide"}, from:true},
+    {grp:"Names, text & shapes", id:"sign", name:"Name sign / plate", desc:"Desk name plate, door sign, badge, any short text in a font you like.", sizes:{S:30, M:45}, sizeNames:{S:"Up to 8\" wide", M:"Up to 12\" wide"}},
+    {grp:"Names, text & shapes", id:"textkey", name:"Text keychain / tag", desc:"Name, word, or date on a keychain or luggage tag. Bulk discount at 5+.", price:12},
+    {grp:"Names, text & shapes", id:"cutter", name:"Cookie or cake pop cutter", desc:"Any shape or logo from your drawing, made as a cutter or stamp. Bulk discount at 5+.", price:15},
+    {grp:"Names, text & shapes", id:"ornament", name:"Ornament with name or photo", desc:"Christmas or keepsake ornament with a name, date, or picture. Bulk discount at 5+.", price:15},
+    {grp:"Names, text & shapes", id:"flexi", name:"Flexi toy from a drawing", desc:"Your doodle or a simple image becomes an articulated flexi toy that wiggles.", price:25},
+    {grp:"Names, text & shapes", id:"puzzle", name:"Pixel puzzle from a photo", desc:"A photo turned into a chunky pixel-art puzzle you assemble. Fun gift.", price:30},
+    {grp:"Names, text & shapes", id:"vase", name:"Custom vase", desc:"Pick a shape and I print a vase in your color. Say the style in the notes.", sizes:{S:25, M:40}, sizeNames:{S:"Up to 6\" tall", M:"Up to 9\" tall"}},
+    {grp:"Names, text & shapes", id:"organizer", name:"Desk organizer to your dimensions", desc:"Tell me what it holds (pens, phone, cables) and the footprint you've got.", price:35}
+  ];
+
+  var state = { pid:null, size:null, qty:1, rush:false, del:"pickup", fee:0 };
+  function product(){ for(var i=0;i<PRODUCTS.length;i++) if(PRODUCTS[i].id===state.pid) return PRODUCTS[i]; return null; }
+  function bulkRate(q){ return q >= 10 ? 0.20 : (q >= 5 ? 0.10 : 0); }
+  function isBigBatch(){ return state.qty >= 25; }
+  function fmt(n){ return "$" + (Math.round(n*100)/100).toString().replace(/\.0+$/,""); }
+  function unit(){ var p = product(); if(!p) return 0; return p.sizes ? (state.size ? p.sizes[state.size] : 0) : p.price; }
+  function computeTotal(){
+    var per = unit() * (state.rush ? 1.25 : 1);
+    return per * state.qty * (1 - bulkRate(state.qty)) + state.fee;
+  }
+
+  // Build product list
+  (function(){
+    var html = "", lastGrp = null;
+    PRODUCTS.forEach(function(p){
+      if(p.grp !== lastGrp){
+        if(lastGrp !== null) html += '</div>';
+        html += '<p class="grp">' + p.grp + '</p><div class="plist">';
+        lastGrp = p.grp;
+      }
+      var px = p.sizes ? "from " + fmt(Math.min.apply(null, Object.keys(p.sizes).map(function(k){ return p.sizes[k]; }))) : fmt(p.price);
+      html += '<button type="button" class="prod" data-pid="' + p.id + '" aria-pressed="false">' +
+        '<span class="pn">' + p.name + (p.ai ? ' <span class="ai">AI</span>' : '') + '</span>' +
+        '<span class="pp">' + px + (p.from ? '+' : '') + '</span>' +
+        '<span class="pd">' + p.desc + '</span></button>';
+    });
+    html += '</div>';
+    $("plistHost").innerHTML = html;
+  })();
+
+  document.querySelectorAll(".prod").forEach(function(b){
+    b.addEventListener("click", function(){
+      document.querySelectorAll(".prod").forEach(function(x){ x.setAttribute("aria-pressed","false"); });
+      b.setAttribute("aria-pressed","true");
+      state.pid = b.getAttribute("data-pid");
+      var p = product();
+      state.size = null;
+      if(p.sizes){
+        var keys = Object.keys(p.sizes), html = "";
+        keys.forEach(function(k, i){
+          html += '<button type="button" class="tile" data-size="' + k + '" aria-pressed="' + (i===0 ? "true":"false") + '">' +
+            '<span class="sz">' + (k==="S" ? "Small" : "Medium") + '</span><span class="px">' + fmt(p.sizes[k]) + (p.from ? "+" : "") + '</span>' +
+            '<span class="ex">' + p.sizeNames[k] + '</span></button>';
+        });
+        $("sizeTiles").innerHTML = html;
+        state.size = keys[0];
+        $("sizeCard").hidden = false;
+        $("stepPhotoN").textContent = "3"; $("stepContactN").textContent = "4";
+        document.querySelectorAll("#sizeTiles .tile").forEach(function(t){
+          t.addEventListener("click", function(){
+            document.querySelectorAll("#sizeTiles .tile").forEach(function(x){ x.setAttribute("aria-pressed","false"); });
+            t.setAttribute("aria-pressed","true"); state.size = t.getAttribute("data-size"); render();
+          });
+        });
+      } else {
+        $("sizeCard").hidden = true;
+        $("stepPhotoN").textContent = "2"; $("stepContactN").textContent = "3";
+      }
+      // Text hint per product
+      var th = $("textHint");
+      if(p.id==="sign"||p.id==="textkey"||p.id==="ornament") th.innerHTML = 'Text on it <span class="req" style="margin-left:0">(required for this one)</span>';
+      else th.innerHTML = 'Text on it? <span style="opacity:.7">(name, date, a short line. Leave blank if none.)</span>';
+      render();
+    });
+  });
+
+  function setQty(q){ q = Math.max(1, Math.min(500, parseInt(q,10) || 1)); state.qty = q; $("qty").value = q; render(); }
+  $("qtyMinus").addEventListener("click", function(){ setQty(state.qty - 1); });
+  $("qtyPlus").addEventListener("click", function(){ setQty(state.qty + 1); });
+  $("qty").addEventListener("change", function(){ setQty(this.value); });
+  $("qty").addEventListener("input", function(){ var v = parseInt(this.value,10); if(v>0){ state.qty = Math.min(500,v); render(); } });
+
+  function toggle(el, key){
+    function flip(){ state[key] = !state[key]; el.setAttribute("aria-pressed", state[key] ? "true" : "false"); render(); }
+    el.addEventListener("click", flip);
+    el.addEventListener("keydown", function(e){ if(e.key===" "||e.key==="Enter"){ e.preventDefault(); flip(); } });
+  }
+  toggle($("rushToggle"), "rush");
+
+  document.querySelectorAll("#delivery button").forEach(function(b){
+    b.addEventListener("click", function(){
+      document.querySelectorAll("#delivery button").forEach(function(x){ x.setAttribute("aria-pressed","false"); });
+      b.setAttribute("aria-pressed","true"); state.del = b.getAttribute("data-del"); state.fee = parseFloat(b.getAttribute("data-fee")); render();
+    });
+  });
+
+  function render(){
+    var p = product(), val = $("priceVal"), meta = $("priceMeta"), lbl = $("priceLbl");
+    var bn = $("bulkNote"); var br = bulkRate(state.qty);
+    if(isBigBatch()){ bn.hidden=false; bn.innerHTML = "<strong style='color:var(--ink)'>25+ is a big batch:</strong> custom quote with real batch pricing. Send it and I'll reach out with a number."; }
+    else if(br){ bn.hidden=false; bn.innerHTML = "Bulk discount applied: <strong style='color:var(--ink)'>" + Math.round(br*100) + "% off</strong>"; }
+    else bn.hidden = true;
+    if(!p){ val.textContent = "$0"; val.classList.remove("custom"); meta.textContent = "Pick an item above"; lbl.textContent="Your quote"; return; }
+    if(isBigBatch()){ lbl.textContent = "Custom quote"; val.textContent = "Big batch"; val.classList.add("custom"); meta.textContent = p.name + " · " + state.qty + " pcs"; return; }
+    lbl.textContent = "Your quote"; val.classList.remove("custom");
+    var t = computeTotal();
+    val.textContent = fmt(t) + (p.from ? "+" : "");
+    meta.textContent = p.name + (p.sizes ? " · " + (state.size==="S"?"Small":"Medium") : "") + " · " + state.qty + (state.qty>1?" pcs":" print") + " · " + (state.del==="ship"?"shipped":"pickup");
+  }
+
+  function markInvalid(el, bad){ el.classList.toggle("invalid", bad); }
+  function esc(s){ return (s||"").replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]; }); }
+  function makeOrderId(){
+    var chars = "ABCDEFGHJKMNPQRSTUVWXYZ23456789", out = "";
+    var arr = new Uint32Array(4);
+    if(window.crypto && crypto.getRandomValues){ crypto.getRandomValues(arr); } else { for(var j=0;j<4;j++) arr[j] = Math.floor(Math.random()*1e9); }
+    for(var i=0;i<4;i++) out += chars[arr[i] % chars.length];
+    return "A3D-" + out;
+  }
+
+  $("quoteForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    var p = product();
+    var name = $("name"), contact = $("contact"), text = $("text"), photo = $("photo"), imagelink = $("imagelink");
+    var needText = p && (p.id==="sign"||p.id==="textkey"||p.id==="ornament");
+    var hasPhoto = photo.files && photo.files.length > 0;
+    var needImg = p && !(p.id==="sign"||p.id==="textkey"||p.id==="vase"||p.id==="organizer");
+    var imgBad = needImg && !hasPhoto && !imagelink.value.trim();
+    var nameBad = !name.value.trim(), contactBad = !contact.value.trim(), textBad = needText && !text.value.trim();
+    if(!p){ window.scrollTo({top:0, behavior:"smooth"}); alert("Pick what you want made first."); return; }
+    if(hasPhoto && photo.files[0].size > 10*1024*1024){ markInvalid(photo, true); alert("That photo is over 10MB. Send a smaller one, or paste a link to it instead."); return; }
+    markInvalid(photo, imgBad); markInvalid(imagelink, imgBad); markInvalid(text, textBad); markInvalid(name, nameBad); markInvalid(contact, contactBad);
+    if(imgBad || textBad || nameBad || contactBad){
+      var first = imgBad ? photo : (textBad ? text : (nameBad ? name : contact));
+      first.scrollIntoView({behavior:"smooth", block:"center"}); first.focus({preventScroll:true}); return;
+    }
+    var order = buildOrder(p, hasPhoto);
+    var btn = $("submitBtn"), btn2 = $("submitBtnInline");
+    btn.disabled = true; btn.textContent = "Sending…"; btn2.disabled = true; btn2.textContent = "Sending…";
+    sendOrder(order, hasPhoto ? photo.files[0] : null).then(function(ok){ showTicket(order, ok); }, function(){ showTicket(order, false); });
+  });
+
+  function buildOrder(p, hasPhoto){
+    var orderId = makeOrderId();
+    var sizeLabel = p.sizes ? ((state.size==="S"?"Small":"Medium") + " (" + p.sizeNames[state.size] + ")") : "";
+    var br = bulkRate(state.qty), big = isBigBatch();
+    var bulkText = (br && !big) ? (Math.round(br*100) + "% off (" + state.qty + " pcs)") : "";
+    var priceText = big ? "Custom quote (big batch)" : (fmt(computeTotal()) + (p.from ? "+ (starting)" : ""));
+    var amt = big ? null : Math.round(computeTotal());
+    var payText = amt ? ("$" + amt + (p.from ? " (starting price)" : "") + " upfront via Cash App $" + CASHTAG + " or Venmo @" + VENMO + ", order ID in the note")
+                      : ("quote request, pay after price is sent");
+    var deliveryText = state.del==="ship" ? "Ship (+$8)" : "Local pickup";
+    var text = $("text").value.trim(), imagelink = $("imagelink").value.trim(), color = $("color").value, needby = $("needby").value, notes = $("notes").value.trim();
+    var name = $("name").value.trim(), contact = $("contact").value.trim();
+    var summary = [
+      "NEW CUSTOM / PHOTO ORDER " + orderId,
+      "Order ID: " + orderId,
+      "Item: " + p.name + (p.ai ? " (AI generated, preview before print)" : ""),
+      sizeLabel ? "Size: " + sizeLabel : null,
+      "Photo: " + (hasPhoto ? "attached to this form" : (imagelink ? imagelink : "none yet, customer to email it")),
+      text ? "Text: " + text : null,
+      "Color: " + color,
+      "Qty: " + state.qty,
+      bulkText ? "Bulk discount: " + bulkText : null,
+      state.rush ? "Rush: yes (+25%)" : null,
+      "Delivery: " + deliveryText,
+      needby ? "Needed by: " + needby : null,
+      notes ? "Notes: " + notes : null,
+      "Quote: " + priceText,
+      "Pay: " + payText,
+      "Name: " + name,
+      "Contact: " + contact
+    ].filter(Boolean).join("\n");
+    return {
+      orderId:orderId, p:p, sizeLabel:sizeLabel, text:text, imagelink:imagelink, hasPhoto:hasPhoto, color:color, needby:needby, notes:notes,
+      name:name, contact:contact, isCustom:big, priceText:priceText, amt:amt, payText:payText, deliveryText:deliveryText, summary:summary, bulkText:bulkText,
+      fields:{
+        "form-name":"custom", "bot-field":"", orderid:orderId, name:name, contact:contact,
+        product:p.name + (p.ai ? " (AI)" : ""), size:sizeLabel, text:text, imagelink:imagelink, color:color,
+        qty:String(state.qty) + (bulkText ? " (bulk " + bulkText + ")" : (big ? " (big batch, custom quote)" : "")),
+        rush: state.rush ? "yes" : "no", delivery:deliveryText, needby:needby, notes:notes, quote:priceText, pay:payText, summary:summary
+      }
+    };
+  }
+
+  function postOnce(body, ms){
+    var ctrl = ("AbortController" in window) ? new AbortController() : null;
+    var timer = ctrl ? setTimeout(function(){ ctrl.abort(); }, ms) : null;
+    var opts = { method:"POST", body:body, cache:"no-store", signal: ctrl ? ctrl.signal : undefined };
+    if(typeof body === "string") opts.headers = { "Content-Type":"application/x-www-form-urlencoded" };
+    return fetch("/", opts).then(function(r){ if(timer) clearTimeout(timer); return r.ok; }, function(){ if(timer) clearTimeout(timer); return false; });
+  }
+  function sendOrder(order, file){
+    if(location.protocol === "file:") return Promise.resolve(false);
+    var body;
+    if(file){
+      body = new FormData();
+      Object.keys(order.fields).forEach(function(k){ body.append(k, order.fields[k]); });
+      body.append("photo", file, file.name);
+    } else {
+      body = new URLSearchParams(order.fields).toString();
+    }
+    var slow = file ? 60000 : 20000;
+    return postOnce(body, slow).then(function(ok){
+      if(ok) return true;
+      return new Promise(function(res){ setTimeout(res, 1500); }).then(function(){ return postOnce(body, slow + 10000); });
+    }).then(function(ok){
+      if(ok) return true;
+      if(file){
+        // Last resort: send without the photo so the order itself isn't lost.
+        order.fields.imagelink = order.fields.imagelink || "(upload failed, customer will email photo)";
+        order.hasPhoto = false;
+        return postOnce(new URLSearchParams(order.fields).toString(), 30000);
+      }
+      return new Promise(function(res){ setTimeout(res, 3000); }).then(function(){ return postOnce(body, 30000); });
+    });
+  }
+
+  function showTicket(o, sent){
+    var payNote = encodeURIComponent(o.orderId + " 3D print" + (o.name ? " - " + o.name : ""));
+    var cashUrl = "https://cash.app/$" + CASHTAG + (o.amt ? "/" + o.amt : "");
+    var venmoUrl = "https://venmo.com/" + VENMO + "?txn=pay" + (o.amt ? "&amount=" + o.amt : "") + "&note=" + payNote;
+    var rows = "";
+    function row(k,v,mono){ if(!v) return; rows += '<div class="line"><dt>'+k+'</dt><dd class="'+(mono?"mono":"")+'">'+v+'</dd></div>'; }
+    row("Order ID", esc(o.orderId), true);
+    row("Item", esc(o.p.name) + (o.p.ai ? " (AI)" : ""));
+    if(o.sizeLabel) row("Size", esc(o.sizeLabel));
+    row("Photo", o.hasPhoto ? "Attached &#10003;" : (o.imagelink ? '<a href="'+esc(o.imagelink)+'" target="_blank" rel="noopener">Link &nearr;</a>' : "Not yet, email it"));
+    if(o.text) row("Text", esc(o.text));
+    row("Color", esc(o.color));
+    row("Quantity", String(state.qty), true);
+    if(o.bulkText) row("Bulk discount", esc(o.bulkText));
+    if(state.rush) row("Speed", "Rush (+25%)");
+    row("Delivery", o.deliveryText);
+    if(o.needby) row("Needed by", esc(o.needby), true);
+    if(o.notes) row("Notes", esc(o.notes));
+    row("Name", esc(o.name));
+    row("Contact", esc(o.contact), true);
+
+    var photoNag = (!o.hasPhoto && !o.imagelink)
+      ? '<div class="warnbox"><strong>One more thing:</strong> I still need the photo. Email it to <strong>orders@alamo3dprinting.com</strong> with <span class="idcopy">' + esc(o.orderId) + '</span> in the subject line.</div>' : "";
+
+    var payHtml;
+    if(o.amt){
+      payHtml = '<div class="pay"><h3>Pay $' + o.amt + ' to start your order</h3>' +
+        '<p>' + (o.p.from ? 'That\'s the starting price. If the piece needs more, I\'ll tell you the difference before printing.' : 'Amount\'s pre-filled. Tap one, hit send, and you\'re in the queue.') + (o.p.ai ? ' You\'ll get a preview render to approve before anything prints.' : '') + '</p>' +
+        '<div class="paybtns"><a class="paybtn cash" href="' + cashUrl + '" target="_blank" rel="noopener">Cash App</a>' +
+        '<a class="paybtn venmo" href="' + venmoUrl + '" target="_blank" rel="noopener">Venmo</a></div>' +
+        '<p class="alt"><strong style="color:var(--ink)">Put <span class="idcopy">' + esc(o.orderId) + '</span> in the payment note.</strong> Venmo fills it in for you; on Cash App type it in the "For" box. That\'s how I match your payment to this order.</p>' +
+        '<p class="alt">Orders don\'t start until payment lands. Cash App or Venmo only.</p></div>';
+    } else {
+      payHtml = '<div class="pay"><h3>Quote request received</h3><p>This isn\'t an order yet. Big batches get real bulk pricing, so I\'ll work up a number for ' + state.qty + ' of these and reach out. Once that\'s paid, you\'re in the queue.</p><p class="alt">Payment is Cash App or Venmo, always before printing.</p></div>';
+    }
+    var headTitle = sent ? (o.isCustom ? "Quote request sent" : "Order sent") : "Order ready";
+    var headSub = sent ? (o.isCustom ? "I'll get you a price shortly." : "Pay below and you're in the queue.") : "Review it below";
+    var mailto = "mailto:orders@alamo3dprinting.com?subject=" + encodeURIComponent("Custom order " + o.orderId + " from " + (o.name || "customer")) + "&body=" + encodeURIComponent(o.summary);
+    var warn = sent ? "" :
+      '<div class="warnbox"><strong>Heads up:</strong> the order didn\'t send automatically (bad signal, maybe). Tap the button below to email it to me instead, and attach your photo to that email.' +
+      '<a class="paybtn cash" style="display:flex;margin-top:10px;background:var(--accent);color:var(--accent-ink)" href="' + mailto + '">Email this order to Alamo 3D</a></div>';
+
+    $("app").innerHTML =
+      '<header class="top"><div class="brand"><div class="mark" aria-hidden="true">'+
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>'+
+      '<div><h1>'+headTitle+'</h1><div class="sub">'+headSub+'</div></div></div></header>'+
+      '<div class="ticket"><div class="head"><div class="small">' + (o.isCustom ? "Quote" : "Your quote") + '</div>'+
+      '<div class="big">'+o.priceText+'</div>'+
+      '<div class="small">' + (o.p.ai ? "AI-built from your photo. Preview before print." : "Single-color PLA+. Pay to lock it in.") + '</div>'+
+      '<div class="idpill">Order ID ' + esc(o.orderId) + '</div></div>'+
+      '<dl>'+rows+'</dl></div>'+
+      payHtml + warn + photoNag +
+      '<button class="ghost" id="copyBtn">Copy order details</button>'+
+      '<button class="backlink" id="editBtn">&larr; Start another order</button>'+
+      '<p class="footnote">Alamo 3D &middot; San Antonio, TX</p>';
+    $("pricebar").hidden = true;
+    window.scrollTo({top:0, behavior:"smooth"});
+    $("copyBtn").addEventListener("click", function(){
+      var btn = this;
+      function done(){ btn.textContent = "Copied ✓"; setTimeout(function(){ btn.textContent = "Copy order details"; }, 1800); }
+      if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(o.summary).then(done, function(){ fallbackCopy(o.summary); done(); }); }
+      else { fallbackCopy(o.summary); done(); }
+    });
+    $("editBtn").addEventListener("click", function(){ location.reload(); });
+  }
+  function fallbackCopy(text){
+    var ta = document.createElement("textarea"); ta.value = text; ta.style.position="fixed"; ta.style.opacity="0";
+    document.body.appendChild(ta); ta.select(); try{ document.execCommand("copy"); }catch(e){} document.body.removeChild(ta);
+  }
+  render();
+})();
+</script>
+</body>
+</html>
