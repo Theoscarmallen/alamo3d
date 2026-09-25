@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<meta name="description" content="Alamo 3D: custom 3D printing in San Antonio. Paste a model link, get your price instantly. PLA+ and PETG, local pickup or shipping.">
-<title>Alamo 3D · Get a print quote</title>
+<meta name="description" content="Alamo 3D: 3D printing in San Antonio from $12. Paste a model link, get your price instantly. PLA+ and PETG, local pickup or $8 shipping.">
+<title>Alamo 3D · 3D printing in San Antonio</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23F1560B'/%3E%3Cpath d='M18 14h28l-3 14H21z' fill='none' stroke='%23fff' stroke-width='5' stroke-linejoin='round'/%3E%3Cpath d='M32 28v14' stroke='%23fff' stroke-width='5' stroke-linecap='round'/%3E%3Crect x='24' y='42' width='16' height='12' rx='2' fill='none' stroke='%23fff' stroke-width='5'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -220,6 +220,62 @@
   .backlink{display:inline-block; margin-top:14px; font-size:13px; color:var(--muted); background:none; border:none; cursor:pointer; text-decoration:underline; font-family:var(--font-body);}
   .footnote{font-size:11.5px; color:var(--muted); text-align:center; margin:20px 4px 0; line-height:1.5;}
   @media (prefers-reduced-motion:reduce){*{transition:none!important;}}
+
+  /* ---- v2 look ---- */
+  body{background:radial-gradient(1100px 520px at 50% -180px, rgba(241,86,11,.13), transparent 70%), var(--bg); background-repeat:no-repeat;}
+  header.top{padding-block:16px 4px;}
+  .hero{position:relative; overflow:hidden; border-radius:22px; padding:20px 20px 20px; color:#fff; isolation:isolate;
+    background:radial-gradient(130% 100% at 100% 0%, rgba(255,110,40,.50), transparent 58%), linear-gradient(165deg,#1d222b 0%,#11141a 100%);
+    box-shadow:0 2px 4px rgba(10,12,16,.12), 0 18px 40px rgba(10,12,16,.22);}
+  .hero::before{content:""; position:absolute; inset:0; z-index:-1; pointer-events:none;
+    background:repeating-linear-gradient(0deg, rgba(255,255,255,.035) 0 1px, transparent 1px 5px);}
+  .hero .cube{position:absolute; right:-14px; top:6px; width:150px; height:150px; z-index:-1; opacity:.95;}
+  .hero .mark{background:linear-gradient(140deg,#FF8A3D,#E2470A); color:#fff; box-shadow:0 6px 16px rgba(241,86,11,.45);}
+  .hero .brand h1{color:#fff;}
+  .hero .brand .sub{color:rgba(255,255,255,.66);}
+  .headline{font-family:var(--font-display); font-weight:800; font-size:31px; line-height:1.02; letter-spacing:-.025em; margin:22px 0 10px; max-width:15ch;}
+  .headline span{background:linear-gradient(90deg,#FFB27A,#FF6A1F); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .heroP{margin:0; font-size:14.5px; line-height:1.5; color:rgba(255,255,255,.80); max-width:44ch;}
+  .heroP strong{color:#fff; font-weight:600;}
+  .chips{display:flex; flex-wrap:wrap; gap:6px; margin-top:15px;}
+  .chip{display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:600; padding:6px 10px; border-radius:999px;
+    background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.14); color:rgba(255,255,255,.92); backdrop-filter:blur(4px);}
+  .chip::before{content:""; width:6px; height:6px; border-radius:50%; background:#FF8A3D; box-shadow:0 0 0 3px rgba(255,138,61,.18);}
+  .pagetabs{display:grid; grid-template-columns:1fr 1fr; gap:4px; margin-top:12px; padding:4px; border-radius:14px; background:var(--surface); border:1px solid var(--line); box-shadow:var(--shadow);}
+  .pagetabs a{text-align:center; text-decoration:none; font-family:var(--font-display); font-weight:700; font-size:13.5px; color:var(--muted); padding:10px 6px; border-radius:10px; transition:background .12s, color .12s;}
+  .pagetabs a:hover{color:var(--ink);}
+  .pagetabs a[aria-current=page]{background:linear-gradient(140deg,#FF7A30,#E2470A); color:#fff; box-shadow:0 4px 12px rgba(241,86,11,.30);}
+  .how{list-style:none; margin:12px 0 0; padding:0; display:grid; grid-template-columns:repeat(3,1fr); gap:8px; counter-reset:how;}
+  .how li{counter-increment:how; background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:11px 10px 12px; font-size:11.5px; color:var(--muted); line-height:1.35;}
+  .how li::before{content:counter(how); display:grid; place-items:center; width:20px; height:20px; border-radius:50%; margin-bottom:7px;
+    font-family:var(--font-mono); font-size:11px; font-weight:600; color:var(--accent); background:var(--accent-soft);}
+  .how b{display:block; font-family:var(--font-display); font-size:13px; color:var(--ink); margin-bottom:1px;}
+  .card{border-radius:18px; padding:19px;}
+  .step .n{border-radius:50%; background:linear-gradient(140deg,#FF7A30,#E2470A); color:#fff;}
+  .step h2{font-size:16.5px;}
+  .tile{position:relative; border-radius:14px; transition:border-color .12s, background .12s, transform .08s;}
+  .tile:hover{border-color:color-mix(in srgb, var(--accent) 45%, var(--line));}
+  .tile:active{transform:scale(.985);}
+  .tile[aria-pressed=true]{box-shadow:0 0 0 3px var(--accent-soft);}
+  .bigcta{background:linear-gradient(140deg,#FF7A30,#E2470A); box-shadow:0 8px 22px rgba(241,86,11,.35);}
+  .cta{background:linear-gradient(140deg,#FF7A30,#E2470A);}
+  @media (prefers-color-scheme:dark){ .bigcta,.cta{color:#fff;} .step .n{color:#fff;} }
+  .pricebar{backdrop-filter:saturate(1.4) blur(10px); background:color-mix(in srgb, var(--surface) 88%, transparent);}
+  .ticket .head{background:radial-gradient(120% 120% at 100% 0%, rgba(255,160,90,.55), transparent 60%), linear-gradient(140deg,#FF7A30,#D9430A); color:#fff;}
+  details{border-radius:14px;}
+  summary:hover{color:var(--accent);}
+  .sitefoot{margin-top:26px; text-align:center; font-size:12px; color:var(--muted);}
+  .sitefoot a{color:var(--accent); text-decoration:none; font-weight:600;}
+  @media (min-width:600px){ .headline{font-size:36px;} .hero{padding:24px;} .hero .cube{width:180px; height:180px; right:-8px;} }
+  @media (max-width:599px){ .hero .cube{width:118px; height:118px; right:-30px; top:64px; opacity:.45;} }
+  @media (max-width:360px){ .how{grid-template-columns:1fr;} .headline{font-size:27px;} }
+
+  #sizeTiles .tile{padding-right:34px;}
+  #sizeTiles .tile.wide{grid-column:1 / -1;}
+  .tile .bar{position:absolute; right:11px; top:12px; bottom:12px; width:9px; border-radius:6px; background:var(--line-2); overflow:hidden; display:flex; align-items:flex-end;}
+  .tile .bar i{display:block; width:100%; height:var(--h); border-radius:6px; background:linear-gradient(180deg,#FFA066,#E2470A);}
+  .tile[aria-pressed=true] .bar{background:rgba(241,86,11,.14);}
+  .tile .tag{position:absolute; top:-8px; left:10px; font-family:var(--font-mono); font-size:9.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:#fff; background:linear-gradient(140deg,#FF7A30,#E2470A); border-radius:6px; padding:1px 6px;}
 </style>
 </head>
 <body>
@@ -251,17 +307,27 @@
 
 <div class="wrap" id="app">
   <header class="top">
-    <div class="brand">
-      <div class="mark" aria-hidden="true">
+    <div class="hero">
+      <svg class="cube" viewBox="0 0 120 120" aria-hidden="true"><g fill="none" stroke-linejoin="round" stroke-linecap="round"><path d="M60 14 104 38v48L60 110 16 86V38z" fill="rgba(255,122,48,.16)" stroke="rgba(255,150,80,.7)" stroke-width="1.6"/><path d="M60 14 104 38 60 62 16 38z" fill="rgba(255,150,80,.22)"/><path d="M16 38l44 24 44-24M60 62v48" stroke="rgba(255,150,80,.7)" stroke-width="1.6"/><g stroke="rgba(255,150,80,.28)" stroke-width="1"><path d="M16 44 60 68"/><path d="M60 68 104 44"/><path d="M16 50 60 74"/><path d="M60 74 104 50"/><path d="M16 56 60 80"/><path d="M60 80 104 56"/><path d="M16 62 60 86"/><path d="M60 86 104 62"/><path d="M16 68 60 92"/><path d="M60 92 104 68"/><path d="M16 74 60 98"/><path d="M60 98 104 74"/><path d="M16 80 60 104"/><path d="M60 104 104 80"/></g></g></svg>
+      <div class="brand">
+        <div class="mark" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l-1 5H7L6 3z"/><path d="M12 8v6"/><rect x="9" y="14" width="6" height="7" rx="1"/></svg>
       </div>
-      <div>
-        <h1>Alamo 3D</h1>
-        <div class="sub">Custom 3D printing &middot; PLA+ &amp; PETG &middot; local pickup + shipping</div>
+        <div>
+          <h1>Alamo 3D</h1>
+          <div class="sub">3D printing &middot; San Antonio, TX</div>
+        </div>
       </div>
+      <p class="headline">Paste a link.<br><span>Get your price.</span></p>
+      <p class="heroP">Find a model on Printables, MakerWorld, or Thingiverse, paste the link, pick a size. <strong>Every quote needs a link to the model.</strong> No link, no quote.</p>
+      <div class="chips"><span class="chip">From $12</span><span class="chip">Instant price</span><span class="chip">PLA+ &amp; PETG</span><span class="chip">Pickup or $8 ship</span></div>
     </div>
-    <p class="lede">Send me the model, get your price. <strong>Every quote needs a link to the model</strong> (a Printables, MakerWorld, or Thingiverse page). No link, no quote, so grab one first.</p>
-    <a class="altlink" href="/custom.html">Got a photo, a name, or an idea instead of a model? <strong>Photo &amp; custom prints &rarr;</strong></a>
+    <nav class="pagetabs" aria-label="Order type"><a href="/" aria-current="page">Print a model</a><a href="/custom.html">From a photo or idea</a></nav>
+    <ol class="how">
+      <li><b>Paste the link</b>Pick a size, see your price</li>
+      <li><b>Pay upfront</b>Cash App or Venmo</li>
+      <li><b>Pickup or ship</b>Usually 3 to 5 days</li>
+    </ol>
   </header>
 
   <form id="quoteForm" novalidate>
@@ -290,21 +356,31 @@
       </div>
       <p class="hint" id="sizeHint">Best guess is fine. I'll tell you before printing if it needs a bump.</p>
       <div class="tiles" id="sizeTiles">
+        <button type="button" class="tile" data-size="T" data-price="12" aria-pressed="false">
+          <span class="tag">New</span>
+          <span class="sz">Tiny</span><span class="px">$12</span>
+          <span class="ex">Up to 2.5&quot;. Keychains, charms, minis, game pieces.</span>
+          <span class="bar" aria-hidden="true"><i style="--h:24%"></i></span>
+        </button>
         <button type="button" class="tile" data-size="S" data-price="20" aria-pressed="false">
           <span class="sz">Small</span><span class="px">$20</span>
-          <span class="ex">Up to 4&quot;. Keychains, minis, small figures.</span>
+          <span class="ex">Over 2.5&quot;, up to 4&quot;. Small figures, desk toys.</span>
+          <span class="bar" aria-hidden="true"><i style="--h:40%"></i></span>
         </button>
         <button type="button" class="tile" data-size="M" data-price="45" aria-pressed="true">
           <span class="sz">Medium</span><span class="px">$45</span>
           <span class="ex">Over 4&quot;, up to 6&quot;. Most figurines, desk stuff.</span>
+          <span class="bar" aria-hidden="true"><i style="--h:60%"></i></span>
         </button>
         <button type="button" class="tile" data-size="L" data-price="65" aria-pressed="false">
           <span class="sz">Large</span><span class="px">$65</span>
           <span class="ex">6 to 9&quot;. Masks, busts, two-hand pieces.</span>
+          <span class="bar" aria-hidden="true"><i style="--h:80%"></i></span>
         </button>
-        <button type="button" class="tile" data-size="XL" data-price="90" aria-pressed="false">
+        <button type="button" class="tile wide" data-size="XL" data-price="90" aria-pressed="false">
           <span class="sz">XL</span><span class="px">$90+</span>
-          <span class="ex">9&quot;+. Helmets, big props. Starting price.</span>
+          <span class="ex">9&quot; and up. Helmets, big props. Starting price, I confirm the exact number before printing.</span>
+          <span class="bar" aria-hidden="true"><i style="--h:100%"></i></span>
         </button>
       </div>
     </div>
@@ -441,7 +517,7 @@
     </details>
     <details>
       <summary>How's the price figured? <span class="plus">+</span></summary>
-      <div class="body">Flat by size for standard single-color prints: Small $20, Medium $45, Large $65, XL from $90. <strong>XL and anything really complex</strong> (20+ hours of print time) I confirm with an exact number so nobody gets surprised. Bulk discounts apply automatically at 5 and 10 prints.</div>
+      <div class="body">Flat by size for standard single-color prints: Tiny $12, Small $20, Medium $45, Large $65, XL from $90. <strong>XL and anything really complex</strong> (20+ hours of print time) I confirm with an exact number so nobody gets surprised. Bulk discounts apply automatically at 5 and 10 prints.</div>
     </details>
     <details>
       <summary>Do I get charged when I hit send? <span class="plus">+</span></summary>
@@ -468,8 +544,8 @@
       <div class="body">Yep. Type <strong>"my own file"</strong> in the model link box, send the order, then email the STL or 3MF to <strong>orders@alamo3dprinting.com</strong> with your order ID in the subject. Same prices apply as long as it's a normal single-color print.</div>
     </details>
     <details>
-      <summary>How big is Small / Medium / Large / XL, actually? <span class="plus">+</span></summary>
-      <div class="body">Rough guide by the longest side: <strong>Small</strong> is anything up to 4 inches (keychains, minis, small figures). <strong>Medium</strong> is over 4 and up to 6 inches (most figurines, desk stuff). <strong>Large</strong> 6 to 9 inches (masks, busts, two-hand pieces). <strong>XL</strong> 9 inches and up (helmets, big props), which is a $90 starting price I confirm before printing. Between two sizes? Pick the smaller one and I'll tell you if it needs a bump.</div>
+      <summary>How big is Tiny / Small / Medium / Large / XL, actually? <span class="plus">+</span></summary>
+      <div class="body">Rough guide by the longest side: <strong>Tiny</strong> is anything up to 2.5 inches (keychains, charms, minis, game pieces). <strong>Small</strong> is over 2.5 and up to 4 inches (small figures, desk toys). <strong>Medium</strong> is over 4 and up to 6 inches (most figurines, desk stuff). <strong>Large</strong> 6 to 9 inches (masks, busts, two-hand pieces). <strong>XL</strong> 9 inches and up (helmets, big props), which is a $90 starting price I confirm before printing. Between two sizes? Pick the smaller one and I'll tell you if it needs a bump.</div>
     </details>
     <details>
       <summary>What does the finished print look like? <span class="plus">+</span></summary>
@@ -489,11 +565,11 @@
     </details>
     <details>
       <summary>What if the model is bigger than the size I picked? <span class="plus">+</span></summary>
-      <div class="body">That's what the <strong>Looks / Function</strong> toggle is for. Pick <strong>Looks</strong> and you're buying a size: choose Small and I scale the model to 4 inches or under. Pick <strong>Function</strong> and it prints at the model's real size, so choose the tier that matches its actual dimensions. If a functional part turns out bigger than the tier you paid for, I'll message you the difference before printing.</div>
+      <div class="body">That's what the <strong>Looks / Function</strong> toggle is for. Pick <strong>Looks</strong> and you're buying a size: choose Tiny and I scale the model to 2.5 inches or under, Small is 4 inches or under, and so on. Pick <strong>Function</strong> and it prints at the model's real size, so choose the tier that matches its actual dimensions. If a functional part turns out bigger than the tier you paid for, I'll message you the difference before printing.</div>
     </details>
   </section>
 
-  <p class="footnote">Small $20 &middot; Medium $45 &middot; Large $65 &middot; XL from $90. Single-color PLA+ or PETG. Multicolor, exotic materials, and 25+ batches quoted separately. San Antonio, TX.</p>
+  <p class="footnote">Tiny $12 &middot; Small $20 &middot; Medium $45 &middot; Large $65 &middot; XL from $90. Single-color PLA+ or PETG. Multicolor, exotic materials, and 25+ batches quoted separately. San Antonio, TX.</p>
 </div>
 
 <div class="pricebar" id="pricebar">
@@ -510,7 +586,7 @@
 <script>
 (function(){
   var CASHTAG = "TheOscarMallen", VENMO = "OscarMallen";
-  var SIZES = { S:"Small", M:"Medium", L:"Large", XL:"XL" };
+  var SIZES = { T:"Tiny", S:"Small", M:"Medium", L:"Large", XL:"XL" };
   var BIG_BATCH = 25;                      // this many or more of one thing = custom quote
   function bulkRate(q){ return q >= 10 ? 0.20 : (q >= 5 ? 0.10 : 0); }
   var state = { size:"M", basePrice:45, qty:1, rush:false, multi:false, exotic:false, del:"pickup", fee:0, purpose:"decor", fine:false, strong:false };

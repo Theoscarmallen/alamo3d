@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<meta name="description" content="Alamo 3D photo and custom prints: photo to 3D figure, lithophanes, name signs, keychains, cake pop cutters and more. Flat prices, San Antonio pickup or shipping.">
+<meta name="description" content="Alamo 3D photo and custom prints: lithophanes, photo lightboxes, relief plaques, photo keychains, name signs, cake pop cutters and more. Flat prepaid prices, San Antonio pickup or shipping.">
 <title>Alamo 3D · Photo &amp; custom prints</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23F1560B'/%3E%3Cpath d='M18 14h28l-3 14H21z' fill='none' stroke='%23fff' stroke-width='5' stroke-linejoin='round'/%3E%3Cpath d='M32 28v14' stroke='%23fff' stroke-width='5' stroke-linecap='round'/%3E%3Crect x='24' y='42' width='16' height='12' rx='2' fill='none' stroke='%23fff' stroke-width='5'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -239,6 +239,78 @@
   input[type=file]{width:100%; font-family:var(--font-body); font-size:14px; color:var(--ink); background:var(--surface-2); border:1.5px dashed var(--line); border-radius:10px; padding:11px 12px;}
   input[type=file]::file-selector-button{font-family:var(--font-body); font-weight:600; font-size:13px; background:var(--surface); color:var(--ink); border:1px solid var(--line); border-radius:8px; padding:7px 10px; margin-right:10px; cursor:pointer;}
   #imagelink{margin-top:8px;}
+
+  /* ---- v2 look ---- */
+  body{background:radial-gradient(1100px 520px at 50% -180px, rgba(241,86,11,.13), transparent 70%), var(--bg); background-repeat:no-repeat;}
+  header.top{padding-block:16px 4px;}
+  .hero{position:relative; overflow:hidden; border-radius:22px; padding:20px 20px 20px; color:#fff; isolation:isolate;
+    background:radial-gradient(130% 100% at 100% 0%, rgba(255,110,40,.50), transparent 58%), linear-gradient(165deg,#1d222b 0%,#11141a 100%);
+    box-shadow:0 2px 4px rgba(10,12,16,.12), 0 18px 40px rgba(10,12,16,.22);}
+  .hero::before{content:""; position:absolute; inset:0; z-index:-1; pointer-events:none;
+    background:repeating-linear-gradient(0deg, rgba(255,255,255,.035) 0 1px, transparent 1px 5px);}
+  .hero .cube{position:absolute; right:-14px; top:6px; width:150px; height:150px; z-index:-1; opacity:.95;}
+  .hero .mark{background:linear-gradient(140deg,#FF8A3D,#E2470A); color:#fff; box-shadow:0 6px 16px rgba(241,86,11,.45);}
+  .hero .brand h1{color:#fff;}
+  .hero .brand .sub{color:rgba(255,255,255,.66);}
+  .headline{font-family:var(--font-display); font-weight:800; font-size:31px; line-height:1.02; letter-spacing:-.025em; margin:22px 0 10px; max-width:15ch;}
+  .headline span{background:linear-gradient(90deg,#FFB27A,#FF6A1F); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .heroP{margin:0; font-size:14.5px; line-height:1.5; color:rgba(255,255,255,.80); max-width:44ch;}
+  .heroP strong{color:#fff; font-weight:600;}
+  .chips{display:flex; flex-wrap:wrap; gap:6px; margin-top:15px;}
+  .chip{display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:600; padding:6px 10px; border-radius:999px;
+    background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.14); color:rgba(255,255,255,.92); backdrop-filter:blur(4px);}
+  .chip::before{content:""; width:6px; height:6px; border-radius:50%; background:#FF8A3D; box-shadow:0 0 0 3px rgba(255,138,61,.18);}
+  .pagetabs{display:grid; grid-template-columns:1fr 1fr; gap:4px; margin-top:12px; padding:4px; border-radius:14px; background:var(--surface); border:1px solid var(--line); box-shadow:var(--shadow);}
+  .pagetabs a{text-align:center; text-decoration:none; font-family:var(--font-display); font-weight:700; font-size:13.5px; color:var(--muted); padding:10px 6px; border-radius:10px; transition:background .12s, color .12s;}
+  .pagetabs a:hover{color:var(--ink);}
+  .pagetabs a[aria-current=page]{background:linear-gradient(140deg,#FF7A30,#E2470A); color:#fff; box-shadow:0 4px 12px rgba(241,86,11,.30);}
+  .how{list-style:none; margin:12px 0 0; padding:0; display:grid; grid-template-columns:repeat(3,1fr); gap:8px; counter-reset:how;}
+  .how li{counter-increment:how; background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:11px 10px 12px; font-size:11.5px; color:var(--muted); line-height:1.35;}
+  .how li::before{content:counter(how); display:grid; place-items:center; width:20px; height:20px; border-radius:50%; margin-bottom:7px;
+    font-family:var(--font-mono); font-size:11px; font-weight:600; color:var(--accent); background:var(--accent-soft);}
+  .how b{display:block; font-family:var(--font-display); font-size:13px; color:var(--ink); margin-bottom:1px;}
+  .card{border-radius:18px; padding:19px;}
+  .step .n{border-radius:50%; background:linear-gradient(140deg,#FF7A30,#E2470A); color:#fff;}
+  .step h2{font-size:16.5px;}
+  .tile{position:relative; border-radius:14px; transition:border-color .12s, background .12s, transform .08s;}
+  .tile:hover{border-color:color-mix(in srgb, var(--accent) 45%, var(--line));}
+  .tile:active{transform:scale(.985);}
+  .tile[aria-pressed=true]{box-shadow:0 0 0 3px var(--accent-soft);}
+  .bigcta{background:linear-gradient(140deg,#FF7A30,#E2470A); box-shadow:0 8px 22px rgba(241,86,11,.35);}
+  .cta{background:linear-gradient(140deg,#FF7A30,#E2470A);}
+  @media (prefers-color-scheme:dark){ .bigcta,.cta{color:#fff;} .step .n{color:#fff;} }
+  .pricebar{backdrop-filter:saturate(1.4) blur(10px); background:color-mix(in srgb, var(--surface) 88%, transparent);}
+  .ticket .head{background:radial-gradient(120% 120% at 100% 0%, rgba(255,160,90,.55), transparent 60%), linear-gradient(140deg,#FF7A30,#D9430A); color:#fff;}
+  details{border-radius:14px;}
+  summary:hover{color:var(--accent);}
+  .sitefoot{margin-top:26px; text-align:center; font-size:12px; color:var(--muted);}
+  .sitefoot a{color:var(--accent); text-decoration:none; font-weight:600;}
+  @media (min-width:600px){ .headline{font-size:36px;} .hero{padding:24px;} .hero .cube{width:180px; height:180px; right:-8px;} }
+  @media (max-width:599px){ .hero .cube{width:118px; height:118px; right:-30px; top:64px; opacity:.45;} }
+  @media (max-width:360px){ .how{grid-template-columns:1fr;} .headline{font-size:27px;} }
+
+  .grp{display:flex; align-items:center; gap:8px; margin:18px 2px 10px;}
+  .grp::after{content:""; flex:1; height:1px; background:var(--line);}
+  .plist{display:grid; grid-template-columns:1fr 1fr; gap:9px;}
+  @media (max-width:350px){ .plist{grid-template-columns:1fr;} }
+  .prod{position:relative; display:flex; flex-direction:column; align-items:flex-start; gap:3px; padding:13px 12px 13px; border-radius:15px;
+    transition:border-color .12s, background .12s, transform .08s, box-shadow .12s;}
+  .prod:hover{border-color:color-mix(in srgb, var(--accent) 45%, var(--line));}
+  .prod:active{transform:scale(.985);}
+  .prod .ic{width:38px; height:38px; border-radius:11px; display:grid; place-items:center; margin-bottom:6px;
+    background:linear-gradient(145deg, var(--accent-soft), color-mix(in srgb, var(--accent-soft) 60%, var(--surface)));
+    color:var(--accent); border:1px solid color-mix(in srgb, var(--accent) 22%, transparent);}
+  .prod .ic svg{width:21px; height:21px; display:block;}
+  .prod .pn{font-size:14px;}
+  .prod .pp{text-align:left; font-size:14.5px;}
+  .prod .pd{font-size:11.5px;}
+  .prod .new{position:absolute; top:10px; right:10px; font-family:var(--font-mono); font-size:9.5px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:#fff; background:linear-gradient(140deg,#FF7A30,#E2470A); border-radius:6px; padding:1px 6px;}
+  .prod[aria-pressed=true]{box-shadow:0 0 0 3px var(--accent-soft);}
+  .prod[aria-pressed=true] .ic{background:linear-gradient(140deg,#FF7A30,#E2470A); color:#fff; border-color:transparent;}
+  .prod[aria-pressed=true]::after{content:""; position:absolute; top:10px; right:10px; width:20px; height:20px; border-radius:50%;
+    background:#E2470A url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center/12px no-repeat;}
+  .prod[aria-pressed=true] .new{display:none;}
+  input[type=file]{padding:14px 12px; border-width:2px;}
 </style>
 </head>
 <body>
@@ -267,22 +339,33 @@
 
 <div class="wrap" id="app">
   <header class="top">
-    <div class="brand">
-      <div class="mark" aria-hidden="true">
+    <div class="hero">
+      <svg class="cube" viewBox="0 0 120 120" aria-hidden="true"><g fill="none" stroke-linejoin="round" stroke-linecap="round"><path d="M60 14 104 38v48L60 110 16 86V38z" fill="rgba(255,122,48,.16)" stroke="rgba(255,150,80,.7)" stroke-width="1.6"/><path d="M60 14 104 38 60 62 16 38z" fill="rgba(255,150,80,.22)"/><path d="M16 38l44 24 44-24M60 62v48" stroke="rgba(255,150,80,.7)" stroke-width="1.6"/><g stroke="rgba(255,150,80,.28)" stroke-width="1"><path d="M16 44 60 68"/><path d="M60 68 104 44"/><path d="M16 50 60 74"/><path d="M60 74 104 50"/><path d="M16 56 60 80"/><path d="M60 80 104 56"/><path d="M16 62 60 86"/><path d="M60 86 104 62"/><path d="M16 68 60 92"/><path d="M60 92 104 68"/><path d="M16 74 60 98"/><path d="M60 98 104 74"/><path d="M16 80 60 104"/><path d="M60 104 104 80"/></g></g></svg>
+      <div class="brand">
+        <div class="mark" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-8 8"/></svg>
       </div>
-      <div>
-        <h1>Alamo 3D &middot; Photo &amp; custom</h1>
-        <div class="sub">No model? No problem. Send a photo or an idea, I build it and print it.</div>
+        <div>
+          <h1>Alamo 3D</h1>
+          <div class="sub">Photo &amp; custom prints &middot; San Antonio, TX</div>
+        </div>
       </div>
+      <p class="headline">Send a photo.<br><span>Get it printed.</span></p>
+      <p class="heroP">No model? No problem. Flat, <strong>prepaid</strong> prices for prints made from your photo, your name, or your drawing. Pick one, attach the picture, pay, and I take it from there.</p>
+      <div class="chips"><span class="chip">Lithophanes &amp; lightboxes</span><span class="chip">Photo keychains</span><span class="chip">Name signs</span><span class="chip">Pickup or $8 ship</span></div>
     </div>
-    <p class="lede">Flat prices for prints made <strong>from your photo, your name, or your drawing</strong>. Pick one below, attach the picture, pay, and I take it from there. Have a model link already? <a href="/" style="color:var(--accent);font-weight:600;text-decoration:none">Use the regular order page &rarr;</a></p>
+    <nav class="pagetabs" aria-label="Order type"><a href="/">Print a model</a><a href="/custom.html" aria-current="page">From a photo or idea</a></nav>
+    <ol class="how">
+      <li><b>Pick an item</b>Flat price, no haggling</li>
+      <li><b>Send your photo</b>Attach it right here</li>
+      <li><b>Pay &amp; done</b>Cash App or Venmo</li>
+    </ol>
   </header>
 
   <form id="quoteForm" novalidate>
     <div class="card">
       <div class="step"><span class="n">1</span><h2>What do you want made?</h2><span class="req">Required</span></div>
-      <p class="hint" style="margin-bottom:12px">Everything here is single-color PLA+ (you pick the color). Items marked <b style="color:var(--ink)">AI</b> are built with an AI model generator from your photo: the likeness is good, not photo-perfect, and <strong style="color:var(--ink)">you approve a preview before it prints</strong>.</p>
+      <p class="hint" style="margin-bottom:4px">Everything here is single-color PLA+ (you pick the color) at a flat price. <strong style="color:var(--ink)">Paid upfront, then I build it and print it.</strong></p>
 
       <div id="plistHost"></div>
     </div>
@@ -296,7 +379,7 @@
       <div class="step"><span class="n" id="stepPhotoN">2</span><h2>Your photo &amp; details</h2><span class="req">Required</span></div>
       <div class="stack">
         <label class="fld" for="photo" id="photoFld">
-          <p class="hint">Attach the photo or drawing <span style="opacity:.7">(JPG or PNG, under 10MB). One clear, well-lit shot works best. For figures and statues, a front view with a plain background.</span></p>
+          <p class="hint">Attach the photo or drawing <span style="opacity:.7">(JPG or PNG, under 10MB). One clear, well-lit shot works best. High contrast works best for lithophanes and lightboxes.</span></p>
           <input type="file" id="photo" name="photo" accept="image/*">
           <p class="hint" style="margin:8px 0 0">Can't attach? Paste a link to the image instead (Google Photos, iCloud, Dropbox...) or email it to orders@alamo3dprinting.com after you send this.</p>
           <input type="text" id="imagelink" name="imagelink" placeholder="https://... (optional if you attached a file)" inputmode="url" autocomplete="off">
@@ -338,7 +421,7 @@
         </label>
         <label class="fld" for="notes">
           <p class="hint">Anything else I should know? <span style="opacity:.7">(optional)</span></p>
-          <textarea id="notes" name="notes" rows="3" placeholder="e.g. it's my dog Bruno, make the ears big; the sign hangs on a door; gift for Saturday"></textarea>
+          <textarea id="notes" name="notes" rows="3" placeholder="e.g. it's my dog Bruno; the sign hangs on a door; the box needs to fit 3 x 5 inch cards; gift for Saturday"></textarea>
         </label>
       </div>
     </div>
@@ -366,16 +449,16 @@
   <section class="faq">
     <h3>Before you ask</h3>
     <details>
-      <summary>How does "photo to figure" actually work? <span class="plus">+</span></summary>
-      <div class="body">I run your photo through an AI model generator (MakerWorld's Image to 3D and similar tools), clean up the result, and print it in one color. It captures the shape, pose, and vibe well. It won't nail every facial detail like a sculptor would. <strong>I send you a preview render before printing</strong>, and if it's not close enough, you get a refund and we call it a day.</div>
-    </details>
-    <details>
       <summary>What's a lithophane? <span class="plus">+</span></summary>
       <div class="body">A thin white panel where the photo is carved into the thickness of the plastic. Looks like a plain white tile until you hold it up to a light or window, then the picture appears in full detail. Best with clear, high-contrast photos. The night-light version sits on a small USB LED base.</div>
     </details>
     <details>
-      <summary>Why is the AI stuff more expensive than a sign or a keychain? <span class="plus">+</span></summary>
-      <div class="body">The generator tools cost me credits per model, plus there's cleanup and a preview round with you. Signs, keychains, lithophanes, cutters, and vases are built with free makers, so those are cheaper.</div>
+      <summary>What's a photo lightbox? <span class="plus">+</span></summary>
+      <div class="body">A small framed box with your photo split into layers and a light inside. Off, it looks like a clean shelf piece. Switched on, the picture glows with real depth. Runs off <strong>USB</strong>, so any phone charger powers it. Best with a clear photo where the subject stands out from the background.</div>
+    </details>
+    <details>
+      <summary>What photo should I send? <span class="plus">+</span></summary>
+      <div class="body">One clear, well-lit shot, the bigger the better. <strong>High contrast</strong> (a bright subject on a plainer background) comes out best on lithophanes, lightboxes, and reliefs. For keychains and flexi toys, a simple image or logo with clean edges works better than a busy photo. Not sure yours will work? Send it anyway and I'll tell you before printing.</div>
     </details>
     <details>
       <summary>Can I get it in more than one color? <span class="plus">+</span></summary>
@@ -387,7 +470,7 @@
     </details>
     <details>
       <summary>How long does it take? <span class="plus">+</span></summary>
-      <div class="body">Photo items need a modeling step first, so figure <strong>4 to 7 days</strong> from payment (rush is 2 to 3). Signs, keychains, cutters, and ornaments are usually <strong>3 to 5 days</strong>. Pickup is in north central San Antonio, or $8 flat shipping anywhere in the US.</div>
+      <div class="body">Most items are ready in <strong>3 to 5 days</strong> from payment. Lightboxes and night lights take a little longer, <strong>4 to 7 days</strong>. Rush jumps the queue. Pickup is in north central San Antonio, or $8 flat shipping anywhere in the US.</div>
     </details>
     <details>
       <summary>Something not on the list? <span class="plus">+</span></summary>
@@ -395,7 +478,7 @@
     </details>
   </section>
 
-  <p class="footnote">Single-color PLA+. AI-generated items get a preview before printing. Multicolor quoted separately. San Antonio, TX.</p>
+  <p class="footnote">Single-color PLA+, flat prepaid prices. Multicolor quoted separately. San Antonio, TX.</p>
 </div>
 
 <div class="pricebar" id="pricebar">
@@ -416,22 +499,38 @@
 
   // Products. sizes: null = flat price. "from" = starting price, Oscar confirms. ai = uses paid generator credits.
   var PRODUCTS = [
-    {grp:"From a photo", id:"figure", name:"Photo to 3D figure", ai:true, desc:"One photo of a person, pet, character, car, whatever, becomes a printed figure.", sizes:{S:35, M:60}, sizeNames:{S:"Small, up to 4\"", M:"Medium, up to 6\""}},
-    {grp:"From a photo", id:"statue", name:"Portrait statue / bust", ai:true, desc:"Head-and-shoulders bust from a clear face photo. Great gift, great desk piece.", sizes:{S:55, M:80}, sizeNames:{S:"Small, up to 4\"", M:"Medium, up to 6\""}},
-    {grp:"From a photo", id:"litho", name:"Lithophane panel", desc:"Your photo carved into a white panel. Hold it to the light and the picture appears.", sizes:{S:25, M:35}, sizeNames:{S:"4 x 6\"", M:"5 x 7\""}},
-    {grp:"From a photo", id:"lithonl", name:"Lithophane night light", desc:"Same photo panel, curved and mounted on a USB LED base so it glows on a shelf.", price:45},
-    {grp:"From a photo", id:"relief", name:"Photo relief plaque", desc:"Raised 3D relief of a photo or logo on a flat plaque. Hangs on a wall.", price:30},
-    {grp:"From a photo", id:"keychain", name:"Photo or logo keychain", desc:"Your image, logo, or pet's face as a keychain, tag, or bookmark. Bulk discount at 5+.", price:12},
-    {grp:"From a photo", id:"canvas", name:"Filament painting (Chroma Canvas)", desc:"A photo turned into a layered multi-color filament picture. Starting price, I confirm before printing.", sizes:{S:45, M:65}, sizeNames:{S:"6\" wide", M:"9\" wide"}, from:true},
-    {grp:"Names, text & shapes", id:"sign", name:"Name sign / plate", desc:"Desk name plate, door sign, badge, any short text in a font you like.", sizes:{S:30, M:45}, sizeNames:{S:"Up to 8\" wide", M:"Up to 12\" wide"}},
-    {grp:"Names, text & shapes", id:"textkey", name:"Text keychain / tag", desc:"Name, word, or date on a keychain or luggage tag. Bulk discount at 5+.", price:12},
-    {grp:"Names, text & shapes", id:"cutter", name:"Cookie or cake pop cutter", desc:"Any shape or logo from your drawing, made as a cutter or stamp. Bulk discount at 5+.", price:15},
-    {grp:"Names, text & shapes", id:"ornament", name:"Ornament with name or photo", desc:"Christmas or keepsake ornament with a name, date, or picture. Bulk discount at 5+.", price:15},
-    {grp:"Names, text & shapes", id:"flexi", name:"Flexi toy from a drawing", desc:"Your doodle or a simple image becomes an articulated flexi toy that wiggles.", price:25},
-    {grp:"Names, text & shapes", id:"puzzle", name:"Pixel puzzle from a photo", desc:"A photo turned into a chunky pixel-art puzzle you assemble. Fun gift.", price:30},
-    {grp:"Names, text & shapes", id:"vase", name:"Custom vase", desc:"Pick a shape and I print a vase in your color. Say the style in the notes.", sizes:{S:25, M:40}, sizeNames:{S:"Up to 6\" tall", M:"Up to 9\" tall"}},
-    {grp:"Names, text & shapes", id:"organizer", name:"Desk organizer to your dimensions", desc:"Tell me what it holds (pens, phone, cables) and the footprint you've got.", price:35}
+    {grp:"From a photo", id:"litho", icon:"litho", name:"Lithophane panel", desc:"Your photo carved into a white panel. Hold it to the light and the picture appears.", sizes:{S:25, M:35}, sizeNames:{S:"4 x 6\"", M:"5 x 7\""}},
+    {grp:"From a photo", id:"lithonl", icon:"lamp", name:"Lithophane night light", desc:"Same photo panel, curved and mounted on a USB LED base so it glows on a shelf.", price:45},
+    {grp:"From a photo", id:"lightbox", icon:"lightbox", name:"Photo lightbox", isNew:true, desc:"A framed box that lights up your photo in layers. Shelf or nightstand piece, USB powered.", price:50},
+    {grp:"From a photo", id:"relief", icon:"relief", name:"Photo relief plaque", desc:"Raised 3D relief of a photo, pet, or logo on a flat plaque. Hangs on a wall.", price:30},
+    {grp:"From a photo", id:"keychain", icon:"keychain", name:"Photo or logo keychain", desc:"Your image, logo, or pet's face as a keychain, tag, or bookmark. Bulk discount at 5+.", price:12},
+    {grp:"From a photo", id:"flexi", icon:"flexi", name:"Flexi toy", desc:"Your doodle, pet, or a simple image becomes an articulated flexi toy that wiggles.", price:25},
+    {grp:"From a photo", id:"puzzle", icon:"puzzle", name:"Pixel puzzle", desc:"A photo turned into a chunky pixel-art puzzle you put together. Fun gift.", price:30},
+    {grp:"Names, text & shapes", id:"sign", icon:"sign", name:"Name sign / plate", desc:"Desk name plate, door sign, badge, any short text in a font you like.", sizes:{S:30, M:45}, sizeNames:{S:"Up to 8\" wide", M:"Up to 12\" wide"}},
+    {grp:"Names, text & shapes", id:"textkey", icon:"tag", name:"Text keychain / tag", desc:"Name, word, or date on a keychain or luggage tag. Bulk discount at 5+.", price:12},
+    {grp:"Names, text & shapes", id:"cutter", icon:"heart", name:"Cookie or cake pop cutter", desc:"Any shape or logo from your drawing, made as a cutter or stamp. Bulk discount at 5+.", price:15},
+    {grp:"Names, text & shapes", id:"ornament", icon:"ornament", name:"Name ornament", desc:"Christmas or keepsake ornament with a name or date. Bulk discount at 5+.", price:15},
+    {grp:"Names, text & shapes", id:"vase", icon:"vase", name:"Custom vase", desc:"Pick a shape and I print a vase in your color. Say the style in the notes.", sizes:{S:25, M:40}, sizeNames:{S:"Up to 6\" tall", M:"Up to 9\" tall"}},
+    {grp:"Names, text & shapes", id:"organizer", icon:"organizer", name:"Desk organizer", desc:"Built to your space. Tell me what it holds (pens, phone, cables) and the footprint.", price:35},
+    {grp:"Names, text & shapes", id:"parametric", icon:"ruler", name:"Made-to-measure part", isNew:true, desc:"Box, hook, cable clip, spacer or bracket sized to your measurements. Starting price.", price:20, from:true}
   ];
+  var NOIMG = ["sign","textkey","ornament","vase","organizer","parametric"];
+  var ICONS = {
+    litho:'<rect x="4" y="3" width="12" height="17" rx="1.5"/><circle cx="9" cy="8.5" r="1.4"/><path d="M6.5 16l3-3.5 2 2 2-2"/><path d="M19 7.5h2.5M19 11.5h3M19 15.5h2.5"/>',
+    lamp:'<path d="M7.5 3.5h9l1.5 11h-12z"/><path d="M5 14.5h14v3.5H5z"/><path d="M12 18v3"/><path d="M9 21h6"/>',
+    lightbox:'<rect x="3" y="4.5" width="18" height="13" rx="2"/><path d="M6.5 14.5l3.5-4.5 3 3.5 2-2 2.5 3"/><circle cx="16" cy="8.5" r="1.3"/><path d="M8 21h8M12 17.5V21"/>',
+    relief:'<rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M6 16.5c1.8-3.8 3.8-5.8 6-5.8s4.2 2 6 5.8"/><circle cx="12" cy="8" r="1.6"/>',
+    keychain:'<circle cx="7" cy="7" r="3.2"/><path d="M9.3 9.3l2.2 2.2"/><rect x="11" y="11" width="10" height="10" rx="2.6"/><path d="M13.5 18l2-2.3 1.5 1.3 1.5-1.5"/>',
+    flexi:'<circle cx="5" cy="16" r="2.4"/><circle cx="9.8" cy="12.8" r="2.4"/><circle cx="14.6" cy="12.8" r="2.4"/><path d="M17.5 6.5h3.5v4.5h-3.5z"/><path d="M17 12.5l1.5-1.5"/>',
+    puzzle:'<rect x="3" y="3" width="8" height="8" rx="1.2"/><rect x="13" y="3" width="8" height="8" rx="1.2"/><rect x="3" y="13" width="8" height="8" rx="1.2"/><rect x="13" y="13" width="8" height="8" rx="1.2"/>',
+    sign:'<rect x="2" y="7" width="20" height="10" rx="2"/><path d="M6 12h8M17 12h1"/><path d="M8 7l4-4 4 4"/>',
+    tag:'<path d="M3 12V5a2 2 0 0 1 2-2h7l9 9-9 9z"/><circle cx="7.5" cy="7.5" r="1.5"/>',
+    heart:'<path d="M12 20s-7.5-4.6-7.5-10.2A4.2 4.2 0 0 1 12 7.3a4.2 4.2 0 0 1 7.5 2.5C19.5 15.4 12 20 12 20z"/>',
+    ornament:'<circle cx="12" cy="14" r="7"/><path d="M10 7V4.5h4V7"/><path d="M5.5 12.5h13"/><path d="M6 16.5h12"/>',
+    vase:'<path d="M9 3h6"/><path d="M10 3c0 3.2-4 5-4 10.5a6 6 0 0 0 12 0C18 8 14 6.2 14 3"/>',
+    organizer:'<path d="M4 10.5h16V20H4z"/><path d="M8 10.5V4M12 10.5V6.5M16 10.5V3.5"/>',
+    ruler:'<path d="M3 17L17 3l4 4L7 21z"/><path d="M7.5 12.5l2 2M10.5 9.5l2 2M13.5 6.5l2 2"/>'
+  };
 
   var state = { pid:null, size:null, qty:1, rush:false, del:"pickup", fee:0 };
   function product(){ for(var i=0;i<PRODUCTS.length;i++) if(PRODUCTS[i].id===state.pid) return PRODUCTS[i]; return null; }
@@ -455,7 +554,9 @@
       }
       var px = p.sizes ? "from " + fmt(Math.min.apply(null, Object.keys(p.sizes).map(function(k){ return p.sizes[k]; }))) : fmt(p.price);
       html += '<button type="button" class="prod" data-pid="' + p.id + '" aria-pressed="false">' +
-        '<span class="pn">' + p.name + (p.ai ? ' <span class="ai">AI</span>' : '') + '</span>' +
+        (p.isNew ? '<span class="new">New</span>' : '') +
+        '<span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + (ICONS[p.icon]||"") + '</svg></span>' +
+        '<span class="pn">' + p.name + '</span>' +
         '<span class="pp">' + px + (p.from ? '+' : '') + '</span>' +
         '<span class="pd">' + p.desc + '</span></button>';
     });
@@ -549,7 +650,7 @@
     var name = $("name"), contact = $("contact"), text = $("text"), photo = $("photo"), imagelink = $("imagelink");
     var needText = p && (p.id==="sign"||p.id==="textkey"||p.id==="ornament");
     var hasPhoto = photo.files && photo.files.length > 0;
-    var needImg = p && !(p.id==="sign"||p.id==="textkey"||p.id==="vase"||p.id==="organizer");
+    var needImg = p && NOIMG.indexOf(p.id) < 0;
     var imgBad = needImg && !hasPhoto && !imagelink.value.trim();
     var nameBad = !name.value.trim(), contactBad = !contact.value.trim(), textBad = needText && !text.value.trim();
     if(!p){ window.scrollTo({top:0, behavior:"smooth"}); alert("Pick what you want made first."); return; }
@@ -582,7 +683,7 @@
       "Order ID: " + orderId,
       "Item: " + p.name + (p.ai ? " (AI generated, preview before print)" : ""),
       sizeLabel ? "Size: " + sizeLabel : null,
-      "Photo: " + (hasPhoto ? "attached to this form" : (imagelink ? imagelink : "none yet, customer to email it")),
+      NOIMG.indexOf(p.id) >= 0 && !hasPhoto && !imagelink ? null : "Photo: " + (hasPhoto ? "attached to this form" : (imagelink ? imagelink : "none yet, customer to email it")),
       text ? "Text: " + text : null,
       "Color: " + color,
       "Qty: " + state.qty,
@@ -650,7 +751,7 @@
     row("Order ID", esc(o.orderId), true);
     row("Item", esc(o.p.name) + (o.p.ai ? " (AI)" : ""));
     if(o.sizeLabel) row("Size", esc(o.sizeLabel));
-    row("Photo", o.hasPhoto ? "Attached &#10003;" : (o.imagelink ? '<a href="'+esc(o.imagelink)+'" target="_blank" rel="noopener">Link &nearr;</a>' : "Not yet, email it"));
+    if(NOIMG.indexOf(o.p.id) < 0) row("Photo", o.hasPhoto ? "Attached &#10003;" : (o.imagelink ? '<a href="'+esc(o.imagelink)+'" target="_blank" rel="noopener">Link &nearr;</a>' : "Not yet, email it"));
     if(o.text) row("Text", esc(o.text));
     row("Color", esc(o.color));
     row("Quantity", String(state.qty), true);
@@ -662,7 +763,7 @@
     row("Name", esc(o.name));
     row("Contact", esc(o.contact), true);
 
-    var photoNag = (!o.hasPhoto && !o.imagelink)
+    var photoNag = (NOIMG.indexOf(o.p.id) < 0 && !o.hasPhoto && !o.imagelink)
       ? '<div class="warnbox"><strong>One more thing:</strong> I still need the photo. Email it to <strong>orders@alamo3dprinting.com</strong> with <span class="idcopy">' + esc(o.orderId) + '</span> in the subject line.</div>' : "";
 
     var payHtml;
